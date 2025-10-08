@@ -1,7 +1,6 @@
 import js from '@eslint/js';
 import globals from 'globals';
 import pluginReact from 'eslint-plugin-react';
-import json from '@eslint/json';
 import babelParser from '@babel/eslint-parser';
 
 export default [
@@ -36,14 +35,6 @@ export default [
       react: {
         version: 'detect',
       },
-    },
-  },
-  {
-    files: ['**/*.json'],
-    plugins: { json },
-    language: 'json/json',
-    rules: {
-      ...json.configs.recommended.rules,
     },
   },
 ];
