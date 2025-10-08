@@ -6,7 +6,7 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<Shared />}>
-        <Route index element={<Shop />} />
+        <Route path="shop" element={<Shop />} />
       </Route>
     </Routes>
   );

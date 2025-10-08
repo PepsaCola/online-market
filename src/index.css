@@ -3,3 +3,11 @@
   padding: 0;
   box-sizing: border-box;
 }
+ul,
+ol {
+  list-style: none;
+}
+body {
+  background: #f5f7fa;
+  font-family: 'Montserrat', sans-serif;
+}
