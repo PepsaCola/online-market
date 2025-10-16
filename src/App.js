@@ -7,7 +7,7 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<Shared />}>
-        <Route index element={<Main />} />
+        <Route path="main" element={<Main />} />
         <Route path="shop" element={<Shop />} />
       </Route>
     </Routes>
