@@ -1,32 +1,20 @@
 import React from 'react';
-import {
-  StyledGroup52,
-  StyledShopTheBestProducts,
-  StyledWeSellEverythingJustGrabIt,
-  StyledRectangle4,
-  StyledShopNow,
-  StyledHeroImage,
-} from './styled';
+import { HeroContainer, HeroTitle, HeroSubtitle, CtaButton, ButtonText, HeroImage } from './styled';
 
 export const MainBlock = ({ onShopNowClick }) => {
   return (
-    <StyledGroup52>
-      <StyledShopTheBestProducts>
-        SHOP THE
-        <br />
-        BEST PRODUCTS
-      </StyledShopTheBestProducts>
+    <HeroContainer>
+      <HeroTitle>
+        SHOP THE <br /> BEST PRODUCTS
+      </HeroTitle>
 
-      <StyledWeSellEverythingJustGrabIt>
-        <br />
-        We sell everything. Just grab it
-      </StyledWeSellEverythingJustGrabIt>
+      <HeroSubtitle>We sell everything. Just grab it</HeroSubtitle>
 
-      <StyledRectangle4 onClick={onShopNowClick}>
-        <StyledShopNow>Shop Now</StyledShopNow>
-      </StyledRectangle4>
+      <CtaButton onClick={onShopNowClick}>
+        <ButtonText>Shop Now</ButtonText>
+      </CtaButton>
 
-      <StyledHeroImage src="/img/main-hero.png" alt="Product Image" />
-    </StyledGroup52>
+      <HeroImage src="/img/main-hero.png" />
+    </HeroContainer>
   );
 };

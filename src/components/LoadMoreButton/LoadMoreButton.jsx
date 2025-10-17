@@ -1,16 +1,12 @@
 import React from 'react';
-import { StyledGroup38, StyledViewAll } from './styled';
+import { PrimaryButton, ButtonText, ButtonWrapper } from './styled';
 
-export const LoadMoreButton = ({ loading, isMoreToLoad, onLoadMore }) => {
-  if (!isMoreToLoad) {
-    return null;
-  }
-
-  const buttonText = loading ? 'Loading...' : 'View All';
-
+export const LoadMoreButton = ({ onClick }) => {
   return (
-    <StyledGroup38 onClick={onLoadMore} disabled={loading}>
-      <StyledViewAll>{buttonText}</StyledViewAll>
-    </StyledGroup38>
+    <ButtonWrapper>
+      <PrimaryButton onClick={onClick}>
+        <ButtonText>View All</ButtonText>
+      </PrimaryButton>
+    </ButtonWrapper>
   );
 };

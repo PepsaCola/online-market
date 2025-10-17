@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const StyledGroup52 = styled.div`
+export const HeroContainer = styled.div`
   width: 100%;
   height: 700px;
   position: relative;
@@ -16,28 +16,28 @@ export const StyledGroup52 = styled.div`
   padding: 24px 84px;
 `;
 
-export const StyledShopTheBestProducts = styled.span`
+export const HeroTitle = styled.h1`
   color: white;
   font-size: 64px;
-  font-family: Montserrat;
   font-weight: 700;
   line-height: 1.2;
   word-wrap: break-word;
   z-index: 2;
   white-space: pre-wrap;
   margin-bottom: 10px;
+  margin-top: 0;
 `;
 
-export const StyledWeSellEverythingJustGrabIt = styled.span`
+export const HeroSubtitle = styled.p`
   color: white;
   font-size: 24px;
-  font-family: Montserrat;
   font-weight: 400;
   word-wrap: break-word;
   z-index: 2;
+  margin-top: 0;
 `;
 
-export const StyledRectangle4 = styled.button`
+export const CtaButton = styled.button`
   width: 200px;
   height: 70px;
   background: #f99caf;
@@ -50,27 +50,25 @@ export const StyledRectangle4 = styled.button`
   z-index: 2;
   transition: background 0.3s ease;
   margin-top: 30px;
-
   &:hover {
     background: #e08b98;
   }
 `;
 
-export const StyledShopNow = styled.span`
+export const ButtonText = styled.span`
   color: white;
   font-size: 20px;
-  font-family: Montserrat;
   font-weight: 700;
   word-wrap: break-word;
 `;
 
-export const StyledHeroImage = styled.img`
+export const HeroImage = styled.img`
   position: absolute;
   right: 0;
   bottom: 0;
   width: 50%;
   height: auto;
   object-fit: contain;
-  z-index: 3;
+  z-index: 1;
   max-height: 100%;
 `;

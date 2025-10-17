@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
-export const StyledGroup27 = styled.div`
+export const ShowcaseSection = styled.section`
   width: 100%;
-  height: 611px;
+  min-height: 611px;
   position: relative;
   border-radius: 11px;
   display: flex;
@@ -11,30 +11,30 @@ export const StyledGroup27 = styled.div`
   box-sizing: border-box;
 `;
 
-export const StyledCardsContainer = styled.div`
+export const CardsGrid = styled.div`
   display: flex;
   justify-content: space-between;
   gap: 20px;
+  z-index: 1;
 `;
 
-export const StyledRectangle10 = styled.div`
+export const ShowcaseBackground = styled.div`
   width: 100%;
-  height: 611px;
-  left: 0px;
-  top: 0px;
+  height: 100%;
+  left: 0;
+  top: 0;
   position: absolute;
-  background: rgba(176.2, 205.7, 252.06, 0.5);
+  background: rgba(227, 237, 253, 0.7);
   border-radius: 11px;
   z-index: 0;
 `;
 
-export const StyledPopularProductsSpan = styled.span`
-  color: black;
+export const SectionTitle = styled.h2`
+  color: #334155;
   font-size: 32px;
-  font-family: Montserrat;
-  font-weight: 400;
+  font-weight: 500;
   word-wrap: break-word;
-
   margin-bottom: 30px;
-  display: block;
+  z-index: 1;
+  margin-top: 0;
 `;
