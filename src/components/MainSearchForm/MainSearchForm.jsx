@@ -1,13 +1,15 @@
 import { Form, Input, InputWrapper, SearchIcon } from './styled';
-import { useDispatch } from 'react-redux';
-import { fetchProducts } from '../../features/products/productsThunks';
+import { useNavigate } from 'react-router-dom';
 
-export const SearchForm = ({ query, setQuery, categorySlug }) => {
-  const dispatch = useDispatch();
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    dispatch(fetchProducts({ page: 1, limit: 20, title: query, categorySlug }));
+export const MainSearchForm = ({ query, setQuery }) => {
+  const navigate = useNavigate();
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    if (query.trim()) {
+      navigate(`/shop?q=${query}`);
+    } else {
+      navigate('/shop');
+    }
   };
 
   return (

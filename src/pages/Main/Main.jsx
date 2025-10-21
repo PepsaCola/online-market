@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getProducts } from '../../features/products/selectors';
 import { fetchProducts } from '../../features/products/productsThunks';
 import { MainBlock } from '../../components/MainBlock/MainBlock';
-import { SearchForm } from '../../components/SearchForm/SearchForm';
+import { MainSearchForm } from '../../components/MainSearchForm/MainSearchForm';
 import { Container, ProductGrid } from './styled';
 import { PopularProducts } from '../../components/PopularProducts/PopularProducts';
 import { CategoryTitle } from '../../components/CategoryTitle/styled';
@@ -30,7 +30,7 @@ export const Main = () => {
     <>
       <Container>
         <MainBlock />
-        <SearchForm query={query} setQuery={setQuery} />
+        <MainSearchForm query={query} setQuery={setQuery} />
         <PopularProducts items={popularItems} loading={loading} error={error} />
         <CategoryTitle>Category</CategoryTitle>
         <StyledSpan />
