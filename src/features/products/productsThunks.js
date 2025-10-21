@@ -3,41 +3,21 @@ import axiosInstance from '../../api/axiosInstance';
 
 export const fetchProducts = createAsyncThunk(
   'products/fetchAll',
-  async ({ page = 1, limit = 20 }, { rejectWithValue }) => {
+  async ({ page = 1, limit = 20, categorySlug = '', title = '' }, { rejectWithValue }) => {
     try {
-      const offset = (page - 1) * limit;
-
-      const response = await axiosInstance.get(`/products?offset=${offset}&limit=${limit}`);
-
-      const totalResponse = await axiosInstance.get('/products');
-
-      return {
-        data: response.data,
-        page,
-        totalCount: totalResponse.data.length,
-      };
-    } catch (error) {
-      return rejectWithValue(error.response?.data || 'Помилка завантаження продуктів');
-    }
-  },
-);
-
-export const fetchProductsByName = createAsyncThunk(
-  'products/fetchProductsByName',
-  async ({ page = 1, limit = 20, title }, { rejectWithValue }) => {
-    try {
-      const offset = (page - 1) * limit;
+      console.log(page);
 
       const response = await axiosInstance.get(
-        `/products?offset=${offset}&limit=${limit}&title=${title}`,
+        `/products?page=${page}&limit=${limit}&categorySlug=${categorySlug}&title=${title}`,
       );
 
-      const totalResponse = await axiosInstance.get(`/products?title=${title}`);
+      const categories = await axiosInstance.get(`/categories`);
 
       return {
-        data: response.data,
+        data: response.data.data,
         page,
-        totalCount: totalResponse.data.length,
+        totalCount: response.data.totalCount,
+        categories: categories.data,
       };
     } catch (error) {
       return rejectWithValue(error.response?.data || 'Помилка завантаження продуктів');

@@ -1,13 +1,13 @@
 import { Form, Input, InputWrapper, SearchIcon } from './styled';
 import { useDispatch } from 'react-redux';
-import { fetchProductsByName } from '../../features/products/productsThunks';
+import { fetchProducts } from '../../features/products/productsThunks';
 
-export const SearchForm = ({ query, setQuery }) => {
+export const SearchForm = ({ query, setQuery, categorySlug }) => {
   const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(fetchProductsByName({ page: 1, limit: 20, title: query }));
+    dispatch(fetchProducts({ page: 1, limit: 20, title: query, categorySlug }));
   };
 
   return (
