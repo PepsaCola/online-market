@@ -44,3 +44,15 @@ export const fetchProductsByName = createAsyncThunk(
     }
   },
 );
+
+export const fetchProductsById = createAsyncThunk(
+  'products/fetchById',
+  async (productId, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.get(`/products/${productId}`);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || 'Помилка завантаження продукту');
+    }
+  },
+);

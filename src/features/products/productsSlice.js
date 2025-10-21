@@ -22,7 +22,12 @@ const productsSlice = createSlice({
       })
       .addCase(fetchProducts.fulfilled, (state, action) => {
         state.loading = false;
-        state.items = action.payload.data;
+        const { page, query } = action.meta.arg;
+        if (query === undefined && page > 1) {
+          state.items = [...state.items, ...action.payload.data];
+        } else {
+          state.items = action.payload.data;
+        }
         state.page = action.payload.page;
         state.totalCount = action.payload.totalCount;
       })

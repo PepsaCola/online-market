@@ -10,6 +10,7 @@ function App() {
       <Route path="/" element={<Shared />}>
         <Route index element={<Main />} />
         <Route path="shop" element={<Shop />} />
+        <Route path="/search" element={<Shop />} />
         <Route path="products/:id" element={<ProductPage />} />
       </Route>
     </Routes>

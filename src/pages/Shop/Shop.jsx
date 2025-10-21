@@ -1,5 +1,6 @@
 import { ArrowIcon, Container, Filter, Filters, FilterWrap, Sorted, Content } from './styled';
 import { useDispatch, useSelector } from 'react-redux';
+import { useSearchParams } from 'react-router-dom';
 import { getProducts } from '../../features/products/selectors';
 import { fetchProducts } from '../../features/products/productsThunks';
 import { useEffect, useState } from 'react';
@@ -10,18 +11,23 @@ import { SearchForm } from '../../components/SearchForm/SearchForm';
 export const Shop = () => {
   const dispatch = useDispatch();
   const { items, loading, error, page, totalCount, limit } = useSelector(getProducts);
-
-  const [query, setQuery] = useState('');
+  const [searchParams] = useSearchParams();
+  const urlQuery = searchParams.get('q') || '';
+  const [query, setQuery] = useState(urlQuery);
 
   useEffect(() => {
-    dispatch(fetchProducts({ page: 1, limit }));
-  }, [dispatch, limit]);
+    dispatch(fetchProducts({ page: 1, limit, query: urlQuery }));
+  }, [dispatch, limit, urlQuery]);
+
+  useEffect(() => {
+    setQuery(urlQuery);
+  }, [urlQuery]);
 
   const totalPages = Math.ceil(totalCount / limit);
 
   const handlePageChange = (newPage) => {
     if (newPage >= 1 && newPage <= totalPages) {
-      dispatch(fetchProducts({ page: newPage, limit }));
+      dispatch(fetchProducts({ page: newPage, limit, query: urlQuery }));
     }
   };
 
