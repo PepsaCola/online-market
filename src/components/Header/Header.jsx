@@ -1,10 +1,12 @@
-import { AccountIcon, BasketIcon, Container, LikeIcon, Title, Wrap } from './styled';
+import { AccountIcon, BasketIcon, Container, LikeIcon, Title, Wrap, StyledLink } from './styled';
 import { Link } from 'react-router-dom';
 
 export const Header = () => {
   return (
     <Container>
-      <Title>MARKET</Title>
+      <StyledLink to="/">
+        <Title>MARKET</Title>
+      </StyledLink>
       <Wrap>
         <Link to="/favorite">
           <LikeIcon width={40} height={35} />

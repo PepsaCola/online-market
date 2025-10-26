@@ -14,6 +14,17 @@ export const Title = styled.h1`
   color: black;
   font-size: 24px;
 `;
+export const StyledLink = styled(Link)`
+  text-decoration: none;
+  color: inherit;
+  &:focus,
+  &:hover,
+  &:visited,
+  &:link,
+  &:active {
+    text-decoration: none;
+  }
+`;
 export const Wrap = styled.div`
   display: flex;
   gap: 32px;
@@ -26,9 +37,4 @@ export const BasketIcon = styled(Basket)`
 `;
 export const AccountIcon = styled(Account)`
   cursor: pointer;
-`;
-export const StyledLink = styled(Link)`
-  text-decoration: none;
-  color: inherit;
-  line-height: 1;
 `;
