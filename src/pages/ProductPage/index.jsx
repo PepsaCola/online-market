@@ -1,10 +1,11 @@
-import { Container, ProductLayout, ProductImage, ProductCharacteristics } from './styled';
+import { Container, ProductLayout, ProductImage } from './styled';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { fetchProductsById } from '../../features/products/productsThunks';
-import ProductInfoContainer from '../../components/ProductPage/ProductInfoContainer';
+import ProductInfoContainer from '../../components/ProductPage/ProductInfo/ProductInfoContainer';
 import ProductImages from '../../components/ProductPage/ProductImages';
+import ProductDetailsContainer from '../../components/ProductPage/ProductDetails';
 
 const options = [
   {
@@ -60,7 +61,7 @@ export const ProductPage = () => {
             </div>
             <ProductInfoContainer singleProduct={singleProduct} options={options} />
           </ProductLayout>
-          <ProductCharacteristics></ProductCharacteristics>
+          <ProductDetailsContainer singleProduct={singleProduct} />
         </>
       )}
     </Container>

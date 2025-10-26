@@ -1,13 +1,30 @@
-import { AccountIcon, BasketIcon, Container, LikeIcon, Title, Wrap } from './styled';
+import {
+  AccountIcon,
+  BasketIcon,
+  Container,
+  LikeIcon,
+  Title,
+  Wrap,
+  BasketLink,
+  TitleLink,
+} from './styled';
+import { useCart } from '../../pages/CartPage/context/CartContext.jsx';
 
 export const Header = () => {
+  const { cart } = useCart();
+
   return (
     <Container>
-      <Title>MARKET</Title>
+      <TitleLink to="/">
+        <Title>MARKET</Title>
+      </TitleLink>
       <Wrap>
-        <LikeIcon width={40} height={35} />
-        <BasketIcon width={40} height={39} />
-        <AccountIcon width={38} height={40} />
+        <LikeIcon width={32} height={32} />
+        <BasketLink to="/cart">
+          <BasketIcon width={32} height={32} />
+          <p>{cart.length}</p>
+        </BasketLink>
+        <AccountIcon width={32} height={32} />
       </Wrap>
     </Container>
   );

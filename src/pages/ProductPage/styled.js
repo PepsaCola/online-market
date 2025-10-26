@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const Container = styled.div`
   max-width: 1400px;
@@ -21,9 +21,13 @@ export const ProductImage = styled.img`
 `;
 
 export const ProductInfo = styled.div`
+  flex: 0.75;
+  min-width: 0;
+
   h1 {
     font-size: 36px;
     font-weight: bold;
+    word-wrap: break-word;
   }
 
   p {
@@ -55,14 +59,27 @@ export const ProductCartBtn = styled.button`
   color: ${(props) => (props.isActive ? '#595959' : 'white')};
 
   &:hover {
-    background-color: white;
-    color: black;
+    background-color: #f0f0f0;
+    color: #333;
   }
 
   &:active {
     transform: scale(0.98);
     background-color: #e0e0e0;
   }
+
+  ${(props) =>
+    props.isActive &&
+    css`
+      background-color: #f0f0f0;
+      color: #333;
+      border: 1px solid #ccc;
+
+      &:hover {
+        background-color: #e0e0e0;
+        color: black;
+      }
+    `}
 `;
 
 export const ProductLikeBtn = styled.button`
@@ -92,4 +109,55 @@ export const ProductLikeBtn = styled.button`
   }
 `;
 
-export const ProductCharacteristics = styled.div``;
+/***************/
+/*TABS CONTAINER*/
+/****************/
+
+export const ProductDetails = styled.div`
+  width: 100%;
+  margin-top: 80px;
+
+  ul {
+    display: flex;
+    justify-content: center;
+  }
+`;
+
+const activeStylesButton = css`
+  color: #2740b9;
+  border-bottom: 3px solid #2740b9;
+  font-weight: 700;
+`;
+
+const inactiveStylesButton = css`
+  color: black;
+  border-bottom: 1px solid black;
+  font-weight: 400;
+
+  &:hover {
+    color: #2740b9;
+    border-bottom: 1px solid #2740b9;
+  }
+`;
+
+export const TabButton = styled.button`
+  padding: 12px 30px;
+  background-color: transparent;
+  border: none;
+  font-size: 24px;
+  transition: all 0.2s;
+
+  ${(props) => (props.isActive ? activeStylesButton : inactiveStylesButton)};
+`;
+
+export const TabContent = styled.div`
+  background-color: white;
+  padding: 52px 80px;
+  margin-top: 52px;
+  border-radius: 20px;
+
+  li {
+    list-style: none;
+    line-height: 1.6;
+  }
+`;

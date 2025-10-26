@@ -1,7 +1,7 @@
 import StarRating from './StarRating';
-import ProductOptionsGroup from './ProductOptions';
+import ProductOptionsGroup from '../ProductOptions';
 import ProductBtnContainer from './ProductBtn';
-import { ProductInfo } from '../../pages/ProductPage/styled';
+import { ProductInfo } from '../../../pages/ProductPage/styled';
 import { useState } from 'react';
 
 const ProductInfoContainer = ({ singleProduct, options }) => {
@@ -24,7 +24,7 @@ const ProductInfoContainer = ({ singleProduct, options }) => {
         selectedOptions={selectedOptions}
         onOptionSelect={handleOptionSelect}
       />
-      <ProductBtnContainer />
+      <ProductBtnContainer product={singleProduct} />
     </ProductInfo>
   );
 };
