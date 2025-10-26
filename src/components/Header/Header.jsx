@@ -6,20 +6,23 @@ import {
   Title,
   Wrap,
   BasketLink,
-  TitleLink,
+  StyledLink,
 } from './styled';
 import { useCart } from '../../pages/CartPage/context/CartContext.jsx';
+import { Link } from 'react-router-dom';
 
 export const Header = () => {
   const { cart } = useCart();
 
   return (
     <Container>
-      <TitleLink to="/">
+      <StyledLink to="/">
         <Title>MARKET</Title>
-      </TitleLink>
+      </StyledLink>
       <Wrap>
-        <LikeIcon width={32} height={32} />
+        <Link to="/favorite">
+          <LikeIcon width={32} height={32} />
+        </Link>
         <BasketLink to="/cart">
           <BasketIcon width={32} height={32} />
           <p>{cart.length}</p>

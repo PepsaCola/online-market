@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getProducts } from '../../features/products/selectors';
 import { fetchProducts } from '../../features/products/productsThunks';
 import { MainBlock } from '../../components/MainBlock/MainBlock';
-import { SearchForm } from '../../components/SearchForm/SearchForm';
+import { MainSearchForm } from '../../components/MainSearchForm/MainSearchForm';
 import { Container, ProductGrid } from './styled';
 import { PopularProducts } from '../../components/PopularProducts/PopularProducts';
 import { CategoryTitle } from '../../components/CategoryTitle/styled';
@@ -12,36 +12,38 @@ import { ItemCard } from '../../components/ItemCard/ItemCard';
 import { LoadMoreButton } from '../../components/LoadMoreButton/LoadMoreButton';
 
 const limit = 8;
+
 export const Main = () => {
   const [query, setQuery] = useState('');
+  const [page, setPage] = useState(1);
   const dispatch = useDispatch();
   const { items, loading, error } = useSelector(getProducts);
-
   useEffect(() => {
-    dispatch(fetchProducts({ page: 1, limit: limit }));
-  }, [dispatch]);
-  const showcaseItems = items.slice(0, limit);
+    dispatch(fetchProducts({ page: page, limit: limit }));
+  }, [dispatch, page]);
+  const handleLoadMore = () => {
+    setPage((prevPage) => prevPage + 1);
+  };
   const popularItems = items.slice(0, 4);
+
   return (
     <>
       <Container>
         <MainBlock />
-        <SearchForm query={query} setQuery={setQuery} />
+        <MainSearchForm query={query} setQuery={setQuery} />
         <PopularProducts items={popularItems} loading={loading} error={error} />
         <CategoryTitle>Category</CategoryTitle>
         <StyledSpan />
-
         <ProductGrid>
-          {loading && <p>Завантаження...</p>}
+          {loading && items.length === 0 && <p>Завантаження...</p>}
           {error && <p>Помилка: {error}</p>}
-          {!loading &&
-            !error &&
-            showcaseItems.map((item, index) => (
+          {!error &&
+            items.map((item, index) => (
               <ItemCard key={item.id || index} item={{ ...item, isSimpleAdd: index % 3 !== 0 }} />
             ))}
+          {loading && items.length > 0 && <p>Завантаження...</p>}
         </ProductGrid>
-
-        <LoadMoreButton />
+        <LoadMoreButton onClick={handleLoadMore} />
       </Container>
     </>
   );

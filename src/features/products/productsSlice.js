@@ -1,8 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchProducts, fetchProductsByName } from './productsThunks';
+import { fetchProducts, fetchProductsByName, fetchProductsById } from './productsThunks';
 
 const initialState = {
   items: [],
+  singleProduct: null,
   loading: false,
   error: null,
   page: 1,
@@ -41,6 +42,19 @@ const productsSlice = createSlice({
         state.totalCount = action.payload.totalCount;
       })
       .addCase(fetchProductsByName.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(fetchProductsById.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+        state.singleProduct = null;
+      })
+      .addCase(fetchProductsById.fulfilled, (state, action) => {
+        state.loading = false;
+        state.singleProduct = action.payload;
+      })
+      .addCase(fetchProductsById.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });
