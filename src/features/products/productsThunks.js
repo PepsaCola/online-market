@@ -3,18 +3,21 @@ import axiosInstance from '../../api/axiosInstance';
 
 export const fetchProducts = createAsyncThunk(
   'products/fetchAll',
-  async ({ page = 1, limit = 20 }, { rejectWithValue }) => {
+  async ({ page = 1, limit = 20, categorySlug = '', title = '' }, { rejectWithValue }) => {
     try {
-      const offset = (page - 1) * limit;
+      console.log(page);
 
-      const response = await axiosInstance.get(`/products?offset=${offset}&limit=${limit}`);
+      const response = await axiosInstance.get(
+        `/products?page=${page}&limit=${limit}&categorySlug=${categorySlug}&title=${title}`,
+      );
 
-      const totalResponse = await axiosInstance.get('/products');
+      const categories = await axiosInstance.get(`/categories`);
 
       return {
-        data: response.data,
+        data: response.data.data,
         page,
-        totalCount: totalResponse.data.length,
+        totalCount: response.data.totalCount,
+        categories: categories.data,
       };
     } catch (error) {
       return rejectWithValue(error.response?.data || 'Помилка завантаження продуктів');
@@ -22,25 +25,14 @@ export const fetchProducts = createAsyncThunk(
   },
 );
 
-export const fetchProductsByName = createAsyncThunk(
-  'products/fetchProductsByName',
-  async ({ page = 1, limit = 20, title }, { rejectWithValue }) => {
+export const fetchProductsById = createAsyncThunk(
+  'products/fetchById',
+  async (productId, { rejectWithValue }) => {
     try {
-      const offset = (page - 1) * limit;
-
-      const response = await axiosInstance.get(
-        `/products?offset=${offset}&limit=${limit}&title=${title}`,
-      );
-
-      const totalResponse = await axiosInstance.get(`/products?title=${title}`);
-
-      return {
-        data: response.data,
-        page,
-        totalCount: totalResponse.data.length,
-      };
+      const response = await axiosInstance.get(`/products/${productId}`);
+      return response.data;
     } catch (error) {
-      return rejectWithValue(error.response?.data || 'Помилка завантаження продуктів');
+      return rejectWithValue(error.response?.data || 'Помилка завантаження продукту');
     }
   },
 );

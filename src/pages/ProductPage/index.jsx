@@ -2,7 +2,7 @@ import { Container, ProductLayout, ProductImage, ProductCharacteristics } from '
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { fetchProductsById } from '../../features/products/productsThunks';
+// import { fetchProductsById } from '../../features/products/productsThunks';
 import ProductInfoContainer from '../../components/ProductPage/ProductInfoContainer';
 import ProductImages from '../../components/ProductPage/ProductImages';
 
@@ -32,12 +32,12 @@ export const ProductPage = () => {
 
   useEffect(() => {
     if (id) {
-      const numericId = parseInt(id, 10);
-      dispatch(fetchProductsById(numericId));
+      // const numericId = parseInt(id, 10);
+      // dispatch(fetchProductsById(numericId));
     }
   }, [id, dispatch]);
 
-  console.log('singleProduct:', singleProduct);
+  // console.log('singleProduct:', singleProduct);
 
   const handleMainImgClick = (imgUrl) => {
     setMainImage(imgUrl);

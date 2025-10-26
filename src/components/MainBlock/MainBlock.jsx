@@ -5,7 +5,9 @@ export const MainBlock = ({ onShopNowClick }) => {
   return (
     <HeroContainer>
       <HeroTitle>
-        SHOP THE <br /> BEST PRODUCTS
+        SHOP THE
+        <br />
+        BEST PRODUCTS
       </HeroTitle>
 
       <HeroSubtitle>We sell everything. Just grab it</HeroSubtitle>

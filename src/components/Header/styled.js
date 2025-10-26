@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { ReactComponent as Like } from '../../img/like.svg';
 import { ReactComponent as Basket } from '../../img/basket.svg';
 import { ReactComponent as Account } from '../../img/account.svg';
+import { Link } from 'react-router-dom';
 
 export const Container = styled.div`
   display: flex;
@@ -25,4 +26,9 @@ export const BasketIcon = styled(Basket)`
 `;
 export const AccountIcon = styled(Account)`
   cursor: pointer;
+`;
+export const StyledLink = styled(Link)`
+  text-decoration: none;
+  color: inherit;
+  line-height: 1;
 `;

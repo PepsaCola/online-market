@@ -10,10 +10,10 @@ import {
   Price,
 } from './styled';
 
-export const ItemCard = ({ item }) => {
+export const ItemCard = ({ item, itemLength }) => {
   const image = item.images?.[0] || item.images?.[1] || item.images?.[2] || './img/placeholder.jpg';
   return (
-    <Container>
+    <Container itemLength={itemLength}>
       <Img alt={item.slug} src={image} />
       <Name>{item.title}</Name>
       <Price>{item.price} $</Price>
