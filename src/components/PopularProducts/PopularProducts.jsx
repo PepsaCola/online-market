@@ -1,21 +1,11 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import { getProducts } from '../../features/products/selectors';
-import { fetchProducts } from '../../features/products/productsThunks';
 import { ItemCard } from '../../components/ItemCard/ItemCard';
 import { ShowcaseBackground, SectionTitle, ShowcaseSection, CardsGrid } from './styled';
 
-const limit = 4;
-
-export const PopularProducts = () => {
-  const dispatch = useDispatch();
-  const { items, loading, error } = useSelector(getProducts);
-
-  useEffect(() => {
-    dispatch(fetchProducts({ page: 1, limit: limit }));
-  }, [dispatch]);
-
-  const popularItems = items.slice(0, limit);
+export const PopularProducts = ({ items }) => {
+  const { loading, error } = useSelector(getProducts);
 
   return (
     <ShowcaseSection>
@@ -27,7 +17,7 @@ export const PopularProducts = () => {
         {error && <p>Помилка завантаження популярних товарів: {error}</p>}
         {!loading &&
           !error &&
-          popularItems.map((item) => <ItemCard key={item.id || item.name} item={item} />)}
+          items.map((item) => <ItemCard key={item.id || item.name} item={item} />)}
       </CardsGrid>
     </ShowcaseSection>
   );

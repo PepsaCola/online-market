@@ -14,14 +14,14 @@ function App() {
       <Route path="/" element={<Shared />}>
         <Route index element={<Main />} />
         {/* Ось роут з GitHub */}
-        <Route path="/favorite" element={<Favorite />} />
+        <Route path="favorite" element={<Favorite />} />
         <Route path="shop" element={<Shop />} />
-        <Route path="/search" element={<Shop />} />
+        <Route path="search" element={<Shop />} />
         <Route path="products/:id" element={<ProductPage />} />
         <Route path="cart" element={<CartPage />} />
       </Route>
       {/* Ось твої роути */}
-      <Route path="/sign-up" element={<SignUp />} />
+      <Route path="sign-up" element={<SignUp />} />
       <Route path="login" element={<Login />} />
     </Routes>
   );
