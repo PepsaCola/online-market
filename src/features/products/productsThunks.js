@@ -3,21 +3,41 @@ import axiosInstance from '../../api/axiosInstance';
 
 export const fetchProducts = createAsyncThunk(
   'products/fetchAll',
-  async ({ page = 1, limit = 20, categorySlug = '', title = '' }, { rejectWithValue }) => {
+  async ({ page = 1, limit = 20 }, { rejectWithValue }) => {
     try {
-      console.log(page);
+      const offset = (page - 1) * limit;
 
-      const response = await axiosInstance.get(
-        `/products?page=${page}&limit=${limit}&categorySlug=${categorySlug}&title=${title}`,
-      );
+      const response = await axiosInstance.get(`/products?offset=${offset}&limit=${limit}`);
 
-      const categories = await axiosInstance.get(`/categories`);
+      const totalResponse = await axiosInstance.get('/products');
 
       return {
-        data: response.data.data,
+        data: response.data,
         page,
-        totalCount: response.data.totalCount,
-        categories: categories.data,
+        totalCount: totalResponse.data.length,
+      };
+    } catch (error) {
+      return rejectWithValue(error.response?.data || 'Помилка завантаження продуктів');
+    }
+  },
+);
+
+export const fetchProductsByName = createAsyncThunk(
+  'products/fetchProductsByName',
+  async ({ page = 1, limit = 20, title }, { rejectWithValue }) => {
+    try {
+      const offset = (page - 1) * limit;
+
+      const response = await axiosInstance.get(
+        `/products?offset=${offset}&limit=${limit}&title=${title}`,
+      );
+
+      const totalResponse = await axiosInstance.get(`/products?title=${title}`);
+
+      return {
+        data: response.data,
+        page,
+        totalCount: totalResponse.data.length,
       };
     } catch (error) {
       return rejectWithValue(error.response?.data || 'Помилка завантаження продуктів');
@@ -26,13 +46,13 @@ export const fetchProducts = createAsyncThunk(
 );
 
 export const fetchProductsById = createAsyncThunk(
-  'products/fetchById',
-  async (productId, { rejectWithValue }) => {
+  'products/fetchProductById',
+  async (id, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.get(`/products/${productId}`);
+      const response = await axiosInstance.get(`/products/${id}`);
       return response.data;
     } catch (error) {
-      return rejectWithValue(error.response?.data || 'Помилка завантаження продукту');
+      return rejectWithValue(error.response?.data || 'Помилка завантаження продуктів');
     }
   },
 );

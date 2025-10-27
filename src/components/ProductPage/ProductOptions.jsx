@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import ProductOptionItemContainer from './ProductOptionItem';
+import ProductOptionItemContainer from './ProductInfo/ProductOptionItem';
 
 const ProductOptions = styled.ul`
   margin-top: 60px;

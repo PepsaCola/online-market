@@ -1,9 +1,10 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import { ReactComponent as Like } from '../../img/like.svg';
 import { ReactComponent as Basket } from '../../img/basket.svg';
 import { ReactComponent as Plus } from '../../img/plus.svg';
 
-export const Container = styled.div`
+export const Container = styled(Link)`
   width: calc((100% - 78px) / 4);
   height: 400px;
   display: flex;
@@ -15,6 +16,10 @@ export const Container = styled.div`
   transition: 0.3s;
   cursor: pointer;
   position: relative;
+
+  text-decoration: none;
+  color: inherit;
+
   &:hover {
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
   }
