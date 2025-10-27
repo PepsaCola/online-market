@@ -1,36 +1,5 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import {
-  Container,
-  BackGroundWrap,
-  Form,
-  BackGround,
-  Description,
-  Title,
-  FormTitle,
-  Label,
-  Input,
-  AccountBtn,
-  ContainerForLoginRoute,
-  ForUserDescription,
-  RouteToLogIn,
-} from '../SignUp/styled.js';
-export {
-  Container,
-  BackGroundWrap,
-  Form,
-  BackGround,
-  Description,
-  Title,
-  FormTitle,
-  Label,
-  Input,
-  ContainerForLoginRoute,
-  ForUserDescription,
-  AccountBtn,
-  RouteToLogIn,
-};
-
 export const SignInBtn = styled(Link)`
   width: 250px;
   height: 60px;
