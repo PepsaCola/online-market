@@ -19,8 +19,13 @@ export const Main = () => {
   const dispatch = useDispatch();
   const { items, loading, error } = useSelector(getProducts);
   useEffect(() => {
-    dispatch(fetchProducts({ page: page, limit: limit }));
-  }, [dispatch, page]);
+    setPage(1);
+  }, [query]);
+
+  useEffect(() => {
+    dispatch(fetchProducts({ page: page, limit: limit, title: query }));
+  }, [dispatch, page, query]);
+
   const handleLoadMore = () => {
     setPage((prevPage) => prevPage + 1);
   };
