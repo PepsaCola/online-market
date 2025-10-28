@@ -3,6 +3,7 @@ import { fetchProducts } from './productsThunks';
 
 const initialState = {
   items: [],
+  singleProduct: null,
   loading: false,
   error: null,
   page: 1,

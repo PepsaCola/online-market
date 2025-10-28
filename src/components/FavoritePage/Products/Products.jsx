@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchProducts } from '../../features/products/productsThunks';
-import { getProducts } from '../../features/products/selectors';
-import { ProductItem } from '../ProductItem/ProductItem';
+import { fetchProducts } from '../../../features/products/productsThunks';
+import { getProducts } from '../../../features/products/selectors';
+import { ProductItem } from '../../ProductItem/ProductItem';
 import { ProductsContainer, Header, HeaderText, ProductList } from './styled';
 
 export const Products = () => {

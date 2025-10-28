@@ -14,7 +14,7 @@ import {
   Label,
 } from './styled';
 import React from 'react';
-import { ProductsUser } from '../../components/ProductsUser/ProductsUser';
+import { ProductsUser } from '../../components/UserPage/ProductsUser/ProductsUser';
 
 export const User = () => {
   return (

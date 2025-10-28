@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { ReactComponent as ArrowRightIcon } from '../../img/arrow-right.svg';
+import { ReactComponent as ArrowRightIcon } from '../../../img/arrow-right.svg';
 
 export const NavContainer = styled.nav`
   width: 100%;

@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchProducts } from '../../features/products/productsThunks';
-import { getProducts } from '../../features/products/selectors';
+import { fetchProducts } from '../../../features/products/productsThunks';
+import { getProducts } from '../../../features/products/selectors';
 import { ProductsContainer, Header, HeaderText, ProductList } from './styled';
-import { ProductItemUser } from '../ProductItemUser/ProductItemUser';
+import { ProductItemUser } from '../../ProductItemUser/ProductItemUser';
 
 export const ProductsUser = () => {
   const dispatch = useDispatch();

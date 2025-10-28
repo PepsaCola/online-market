@@ -3,6 +3,7 @@ import { Shop } from './pages/Shop/Shop';
 import { Shared } from './pages/Shared/Shared';
 import { Main } from './pages/Main/Main';
 import { ProductPage } from './pages/ProductPage/index';
+import CartPage from './pages/CartPage';
 import { SignUp } from './pages/SignUp/SignUp';
 import { Login } from './pages/Login/Login';
 import { Favorite } from './pages/Favorite/Favorite';
@@ -13,13 +14,16 @@ function App() {
     <Routes>
       <Route path="/" element={<Shared />}>
         <Route index element={<Main />} />
-        <Route path="/favorite" element={<Favorite />} />
+        {/* Ось роут з GitHub */}
+        <Route path="favorite" element={<Favorite />} />
         <Route path="shop" element={<Shop />} />
-        <Route path="/search" element={<Shop />} />
-        <Route path="/user" element={<User />} />
+        <Route path="search" element={<Shop />} />
+        <Route path="user" element={<User />} />
         <Route path="products/:id" element={<ProductPage />} />
+        <Route path="cart" element={<CartPage />} />
       </Route>
-      <Route path="/sign-up" element={<SignUp />} />
+      {/* Ось твої роути */}
+      <Route path="sign-up" element={<SignUp />} />
       <Route path="login" element={<Login />} />
     </Routes>
   );

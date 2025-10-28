@@ -25,7 +25,6 @@ export const Shop = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const debouncedQuery = useDebounce(query, 500);
 
-  // Prepare category options for the dropdown
   const categoryOptions = [
     { value: '', label: 'All Categories' },
     ...categories.map((cat) => ({ value: cat.slug, label: cat.name })),
@@ -54,7 +53,7 @@ export const Shop = () => {
         limit,
         categorySlug: selectedCategory,
         title: debouncedQuery,
-        sortBy: selectedSort, // 👈 Pass sort value to thunk
+        sortBy: selectedSort,
       }),
     );
   }, [dispatch, currentPage, limit, debouncedQuery, selectedCategory, selectedSort]);
