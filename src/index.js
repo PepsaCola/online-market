@@ -8,6 +8,7 @@ import { store } from './app/store';
 import { CartProvider } from './pages/CartPage/context/CartContext';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { WishlistProvider } from './features/favorite/favorite';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -15,7 +16,9 @@ root.render(
     <CartProvider>
       <React.StrictMode>
         <BrowserRouter>
-          <App />
+          <WishlistProvider>
+            <App />
+          </WishlistProvider>
         </BrowserRouter>
       </React.StrictMode>
 

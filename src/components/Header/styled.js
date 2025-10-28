@@ -19,6 +19,7 @@ export const Title = styled.h1`
   color: black;
   font-size: 24px;
 `;
+
 export const StyledLink = styled(Link)`
   text-decoration: none;
   color: inherit;
@@ -58,6 +59,25 @@ export const BasketLink = styled(Link)`
 export const BasketIcon = styled(Basket)`
   cursor: pointer;
 `;
+
 export const AccountIcon = styled(Account)`
   cursor: pointer;
+`;
+
+export const LikeLink = styled(Link)`
+  text-decoration: none;
+  position: relative;
+
+  p {
+    background-color: red;
+    color: white;
+    width: 20px;
+    height: 20px;
+    border-radius: 100%;
+    text-align: center;
+
+    position: absolute;
+    bottom: 0;
+    right: -10px;
+  }
 `;

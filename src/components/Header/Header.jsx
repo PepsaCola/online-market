@@ -7,12 +7,14 @@ import {
   Wrap,
   BasketLink,
   StyledLink,
+  LikeLink,
 } from './styled';
 import { useCart } from '../../pages/CartPage/context/CartContext.jsx';
-import { Link } from 'react-router-dom';
+import { useWishlist } from '../../features/favorite/favorite';
 
 export const Header = () => {
   const { cart } = useCart();
+  const { wishlist } = useWishlist();
 
   return (
     <Container>
@@ -20,9 +22,10 @@ export const Header = () => {
         <Title>MARKET</Title>
       </StyledLink>
       <Wrap>
-        <Link to="/favorite">
+        <LikeLink to="/favorite">
           <LikeIcon width={32} height={32} />
-        </Link>
+          <p>{wishlist.length}</p>
+        </LikeLink>
         <BasketLink to="/cart">
           <BasketIcon width={32} height={32} />
           <p>{cart.length}</p>
