@@ -51,7 +51,7 @@ export const Shop = () => {
       fetchProducts({
         page: currentPage,
         limit,
-        categorySlug: selectedCategory,
+        category: selectedCategory,
         title: debouncedQuery,
         sortBy: selectedSort,
       }),
