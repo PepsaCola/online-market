@@ -1,5 +1,5 @@
 import React from 'react';
-import { Products } from '../../components/Products/Products';
+import { Products } from '../../components/FavoritePage/Products/Products';
 import { Container, WishListBlock, CategoryTitle } from './styled';
 
 export const Favorite = () => {

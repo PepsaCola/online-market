@@ -2,14 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProducts } from '../../features/products/selectors';
 import { fetchProducts } from '../../features/products/productsThunks';
-import { MainBlock } from '../../components/MainBlock/MainBlock';
-import { MainSearchForm } from '../../components/MainSearchForm/MainSearchForm';
+import { MainBlock } from '../../components/MainPage/MainBlock/MainBlock';
+import { MainSearchForm } from '../../components/MainPage/MainSearchForm/MainSearchForm';
 import { Container, ProductGrid } from './styled';
-import { PopularProducts } from '../../components/PopularProducts/PopularProducts';
-import { CategoryTitle } from '../../components/CategoryTitle/styled';
-import { StyledSpan } from '../../components/StyledSpan/StyledSpan';
+import { PopularProducts } from '../../components/MainPage/PopularProducts/PopularProducts';
+import { CategoryTitle } from '../../components/MainPage/CategoryTitle/styled';
+import { StyledSpan } from '../../components/MainPage/StyledSpan/StyledSpan';
 import { ItemCard } from '../../components/ItemCard/ItemCard';
-import { LoadMoreButton } from '../../components/LoadMoreButton/LoadMoreButton';
+import { LoadMoreButton } from '../../components/MainPage/LoadMoreButton/LoadMoreButton';
 
 const limit = 8;
 
@@ -19,8 +19,13 @@ export const Main = () => {
   const dispatch = useDispatch();
   const { items, loading, error } = useSelector(getProducts);
   useEffect(() => {
-    dispatch(fetchProducts({ page: page, limit: limit }));
-  }, [dispatch, page]);
+    setPage(1);
+  }, [query]);
+
+  useEffect(() => {
+    dispatch(fetchProducts({ page: page, limit: limit, title: query }));
+  }, [dispatch, page, query]);
+
   const handleLoadMore = () => {
     setPage((prevPage) => prevPage + 1);
   };

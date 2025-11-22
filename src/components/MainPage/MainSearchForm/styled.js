@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { ReactComponent as Search } from '../../img/search.svg';
+import { ReactComponent as Search } from '../../../img/search.svg';
 
 export const Form = styled.form`
   width: 100%;

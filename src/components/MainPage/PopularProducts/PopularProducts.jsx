@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { getProducts } from '../../features/products/selectors';
-import { ItemCard } from '../../components/ItemCard/ItemCard';
+import { getProducts } from '../../../features/products/selectors';
+import { ItemCard } from '../../ItemCard/ItemCard';
 import { ShowcaseBackground, SectionTitle, ShowcaseSection, CardsGrid } from './styled';
 
 export const PopularProducts = ({ items }) => {

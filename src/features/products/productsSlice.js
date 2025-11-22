@@ -24,15 +24,14 @@ const productsSlice = createSlice({
       })
       .addCase(fetchProducts.fulfilled, (state, action) => {
         state.loading = false;
-        const { page, query } = action.meta.arg;
-        if (query === undefined && page > 1) {
-          state.items = [...state.items, ...action.payload.data];
-        } else {
-          state.items = action.payload.data;
+        if (Array.isArray(action.payload.data)) {
+          if (action.meta.arg.page === 1) {
+            state.items = action.payload.data;
+          } else {
+            state.items = [...state.items, ...action.payload.data];
+          }
+          state.totalCount = action.payload.totalCount;
         }
-        state.page = action.payload.page;
-        state.totalCount = action.payload.totalCount;
-        state.categories = action.payload.categories;
       })
       .addCase(fetchProducts.rejected, (state, action) => {
         state.loading = false;

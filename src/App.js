@@ -7,6 +7,7 @@ import CartPage from './pages/CartPage';
 import { SignUp } from './pages/SignUp/SignUp';
 import { Login } from './pages/Login/Login';
 import { Favorite } from './pages/Favorite/Favorite';
+import { User } from './pages/User/User';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="favorite" element={<Favorite />} />
         <Route path="shop" element={<Shop />} />
         <Route path="search" element={<Shop />} />
+        <Route path="user" element={<User />} />
         <Route path="products/:id" element={<ProductPage />} />
         <Route path="cart" element={<CartPage />} />
       </Route>

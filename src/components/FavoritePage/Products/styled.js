@@ -34,3 +34,18 @@ export const ProductList = styled.div`
   height: 100%;
   padding-bottom: 24px;
 `;
+
+export const EmptyWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 50px 0;
+`;
+
+export const EmptyText = styled.p`
+  font-size: 20px;
+  color: #888888;
+  margin: 0;
+`;

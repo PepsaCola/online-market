@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchProducts } from '../../features/products/productsThunks';
-import { getProducts } from '../../features/products/selectors';
-import { ProductItem } from '../ProductItem/ProductItem';
+import { fetchProducts } from '../../../features/products/productsThunks';
+import { getProducts } from '../../../features/products/selectors';
 import { ProductsContainer, Header, HeaderText, ProductList } from './styled';
+import { ProductItemUser } from '../../ProductItemUser/ProductItemUser';
 
-export const Products = () => {
+export const ProductsUser = () => {
   const dispatch = useDispatch();
   const { items, loading, error } = useSelector(getProducts);
 
@@ -26,12 +26,12 @@ export const Products = () => {
   return (
     <ProductsContainer>
       <Header>
-        <HeaderText className="product-header">Product</HeaderText>
+        <HeaderText className="product-header">Quantity</HeaderText>
         <HeaderText className="price-header">Total Price</HeaderText>
       </Header>
       <ProductList>
         {items.map((item) => (
-          <ProductItem key={item._id} product={item} />
+          <ProductItemUser key={item._id} product={item} />
         ))}
       </ProductList>
     </ProductsContainer>
