@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Container,
   InformationTitle,
@@ -27,10 +27,23 @@ import {
 } from './styled';
 
 import { useCart } from '../../pages/CartPage/context/CartContext';
+import { useSelector } from 'react-redux';
+import { getToken } from '../../features/auth/selectors';
+import { useNavigate } from 'react-router-dom';
 
 export const User = () => {
   const { cart } = useCart();
   const totalAmount = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+
+  const token = useSelector(getToken);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    console.log(token);
+    if (!token) {
+      navigate('/login');
+    }
+  }, []);
 
   return (
     <>

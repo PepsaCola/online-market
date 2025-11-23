@@ -8,6 +8,8 @@ import { SignUp } from './pages/SignUp/SignUp';
 import { Login } from './pages/Login/Login';
 import { Favorite } from './pages/Favorite/Favorite';
 import { User } from './pages/User/User';
+import { ProductPageDescription } from './components/ProductPage/ProductPageDescription/ProductPageDescription';
+import { ProductsPageReviews } from './components/ProductPage/ProductsPageReviews/ProductsPageReviews';
 
 function App() {
   return (
@@ -19,7 +21,10 @@ function App() {
         <Route path="shop" element={<Shop />} />
         <Route path="search" element={<Shop />} />
         <Route path="user" element={<User />} />
-        <Route path="products/:id" element={<ProductPage />} />
+        <Route path="products/:id" element={<ProductPage />}>
+          <Route path="description" element={<ProductPageDescription />} />
+          <Route path="review" element={<ProductsPageReviews />} />
+        </Route>
         <Route path="cart" element={<CartPage />} />
       </Route>
       {/* Ось твої роути */}

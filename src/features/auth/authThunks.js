@@ -17,17 +17,21 @@ export const register = createAsyncThunk(
     }
   },
 );
+
 export const login = createAsyncThunk('auth/login', async (credentials, { rejectWithValue }) => {
   try {
     const response = await axiosInstance.post('/login', credentials);
     const { accessToken, user } = response.data;
     localStorage.setItem('accessToken', accessToken);
     setAuthHeader(accessToken);
+    console.log(accessToken);
+    console.log(user);
     return { accessToken, user };
   } catch (error) {
     return rejectWithValue(error.response?.data?.message || 'Помилка входу');
   }
 });
+
 export const logout = createAsyncThunk('auth/logout', async (_, { rejectWithValue }) => {
   try {
     localStorage.removeItem('accessToken');

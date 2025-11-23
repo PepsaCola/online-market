@@ -1,7 +1,14 @@
-import { Container, ProductLayout, ProductImage } from './styled';
+import {
+  Container,
+  ProductLayout,
+  ProductImage,
+  ProductsNav,
+  ProductsNavLink,
+  ProductsNavWrap,
+} from './styled';
 import { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { Outlet, useParams } from 'react-router-dom';
 // import { fetchProductsById } from '../../features/products/productsThunks';
 import ProductInfoContainer from '../../components/ProductPage/ProductInfo/ProductInfoContainer';
 import ProductImages from '../../components/ProductPage/ProductImages';
@@ -19,10 +26,10 @@ const options = [
 
 export const ProductPage = () => {
   const { id } = useParams();
-  const dispatch = useDispatch();
-  const { singleProduct, loading, error } = useSelector((state) => state.products);
+  const { items, loading, error } = useSelector((state) => state.products);
 
   const [mainImage, setMainImage] = useState(null);
+  const singleProduct = items.find((item) => item.id === id || item._id === id);
 
   useEffect(() => {
     if (singleProduct?.images && singleProduct.images.length > 0) {
@@ -30,19 +37,10 @@ export const ProductPage = () => {
     }
   }, [singleProduct]);
 
-  useEffect(() => {
-    if (id) {
-      // const numericId = parseInt(id, 10);
-      // dispatch(fetchProductsById(numericId));
-    }
-  }, [id, dispatch]);
-
-  // console.log('singleProduct:', singleProduct);
-
   const handleMainImgClick = (imgUrl) => {
     setMainImage(imgUrl);
   };
-
+  console.log(singleProduct);
   return (
     <Container>
       {loading && <p>Завантаження...</p>}
@@ -60,7 +58,18 @@ export const ProductPage = () => {
             </div>
             <ProductInfoContainer singleProduct={singleProduct} options={options} />
           </ProductLayout>
-          {/*<ProductCharacteristics></ProductCharacteristics>*/}
+
+          <ProductsNavWrap>
+            <ProductsNav>
+              {singleProduct.description && (
+                <ProductsNavLink to="description">Description</ProductsNavLink>
+              )}
+              {singleProduct?.reviews.length !== 0 && (
+                <ProductsNavLink to="review">Review</ProductsNavLink>
+              )}
+            </ProductsNav>
+            <Outlet />
+          </ProductsNavWrap>
         </>
       )}
     </Container>
