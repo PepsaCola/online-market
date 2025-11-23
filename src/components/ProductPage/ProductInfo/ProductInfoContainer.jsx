@@ -19,12 +19,14 @@ const ProductInfoContainer = ({ singleProduct, options }) => {
       <h1>{singleProduct?.title}</h1>
       <StarRating rating={singleProduct?.rating || 4.5} />
       <p>${singleProduct?.price.toFixed(2)}</p>
+
       <ProductOptionsGroup
         options={options}
         selectedOptions={selectedOptions}
         onOptionSelect={handleOptionSelect}
       />
-      <ProductBtnContainer product={singleProduct} />
+
+      <ProductBtnContainer product={singleProduct} selectedQty={1} />
     </ProductInfo>
   );
 };

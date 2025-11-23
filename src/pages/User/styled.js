@@ -7,7 +7,7 @@ export const Container = styled.div`
   padding-top: 0;
   display: flex;
   flex-direction: column;
-  gap: 60px;
+  gap: 20px;
   width: auto;
 `;
 
@@ -124,11 +124,13 @@ export const OrderContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  gap: 60px;
+  gap: 40px;
   width: 100%;
-  padding: 40px 100px;
-  border-radius: 15px;
+  padding: 30px;
+  border-radius: 12px;
   background: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  border: 1px solid #f3f4f6;
 `;
 
 export const OrderLeft = styled.div`
@@ -159,7 +161,14 @@ export const ProductRow = styled.div`
   display: grid;
   grid-template-columns: 3fr 1fr 1fr;
   align-items: center;
-  margin-bottom: 30px;
+  margin-bottom: 24px;
+  padding-bottom: 24px;
+
+  &:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
 
   .qty {
     font-size: 16px;
@@ -255,4 +264,11 @@ export const TotalRow = styled.div`
     font-weight: 800;
     color: #111;
   }
+`;
+
+export const OrdersList = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 30px; /* Відступ між різними замовленнями */
+  width: 100%;
 `;

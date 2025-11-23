@@ -1,6 +1,6 @@
 import { useCart } from './context/CartContext.jsx';
 import { CartContainer, CartInfo } from './styled';
-import PaymentForm from '../../components/CartPage/PaymentForm.jsx';
+import PaymentForm from '../../components/CartPage/PaymentForm/PaymentForm.jsx';
 import CartItems from '../../components/CartPage/CartInfo/CartItems';
 
 const CartPage = () => {

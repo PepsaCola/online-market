@@ -64,6 +64,7 @@ export const PaymentFormContainer = styled.form`
 export const FormRow = styled.div`
   display: flex;
   justify-content: space-between;
+  gap: 20px;
 
   div {
     display: flex;

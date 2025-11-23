@@ -4,13 +4,11 @@ import Quantity from './Quantity';
 import { useCart } from '../../../pages/CartPage/context/CartContext';
 
 const CartItems = ({ cart }) => {
-  const { increaseQty, decreaseQty } = useCart();
+  const { increaseQty, decreaseQty, removeFromCart } = useCart();
 
   const totalPrice = cart.reduce((total, item) => {
     return total + item.price * item.qty;
   }, 0);
-
-  const deleteFromCart = () => {};
 
   return (
     <>
@@ -25,7 +23,7 @@ const CartItems = ({ cart }) => {
           {cart.map((item, index) => (
             <li key={index}>
               <div>
-                <img src={item.images[0]} alt={item.title} />
+                <img src={item.images?.[0] || 'https://via.placeholder.com/80'} alt={item.title} />
                 <p className="item-title">{item.title}</p>
               </div>
               <Quantity
@@ -34,15 +32,14 @@ const CartItems = ({ cart }) => {
                 onDecrease={() => decreaseQty(item._id)}
               />
               <p>${(item.price * item.qty).toFixed(2)}</p>
-              <button className="delete_btn" onClick={deleteFromCart}>
-                {' '}
+              <button className="delete_btn" onClick={() => removeFromCart(item._id)}>
                 <RxCross2 />
               </button>
             </li>
           ))}
         </CartItemsList>
       </CartItemsContainer>
-      <TotalPrice>Total: {totalPrice.toFixed(2)}</TotalPrice>
+      <TotalPrice>Total: ${totalPrice.toFixed(2)}</TotalPrice>
     </>
   );
 };

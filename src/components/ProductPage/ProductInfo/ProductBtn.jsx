@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useCart } from '../../../pages/CartPage/context/CartContext';
 import { toast } from 'react-toastify';
 
-const ProductBtnContainer = ({ product }) => {
+const ProductBtnContainer = ({ product, selectedQty = 1 }) => {
   const [likeBtn, setLikeBtn] = useState(false);
   const { cart, addToCart, removeFromCart } = useCart();
 
@@ -19,8 +19,8 @@ const ProductBtnContainer = ({ product }) => {
       removeFromCart(product._id);
       toast.error(`${product.title || 'Item'} removed from cart.`);
     } else {
-      addToCart(product);
-      toast.success(`${product.title || 'Item'} added to cart!`);
+      addToCart(product, selectedQty);
+      toast.success(`${selectedQty} x ${product.title || 'Item'} added to cart!`);
     }
   };
 
@@ -30,10 +30,10 @@ const ProductBtnContainer = ({ product }) => {
 
   return (
     <ProductBtn>
-      <ProductCartBtn onClick={handleCartClick} isActive={isInCart}>
+      <ProductCartBtn onClick={handleCartClick} $isActive={isInCart}>
         {isInCart ? 'Remove from Cart' : 'Add to Cart'}
       </ProductCartBtn>
-      <ProductLikeBtn isActive={likeBtn} onClick={handleLikeBtnClick}>
+      <ProductLikeBtn $isActive={likeBtn} onClick={handleLikeBtnClick}>
         <FaHeart />
       </ProductLikeBtn>
     </ProductBtn>
