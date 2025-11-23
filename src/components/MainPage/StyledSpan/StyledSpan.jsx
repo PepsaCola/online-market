@@ -1,20 +1,22 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { NavContainer, NavItems, NavItem, ArrowRight } from './styled';
 
-export const StyledSpan = () => {
-  const [activeCategory, setActiveCategory] = useState('All');
-  const categories = ['All', 'Product', 'Clothes', 'Sport', 'Kids', 'Domestic', 'School'];
-
+export const StyledSpan = ({ categories, activeCategorySlug, onCategoryChange }) => {
   return (
     <NavContainer>
       <NavItems>
+        {/* Кнопка "All" */}
+        <NavItem active={activeCategorySlug === null} onClick={() => onCategoryChange(null)}>
+          All
+        </NavItem>
+
         {categories.map((category) => (
           <NavItem
-            key={category}
-            active={activeCategory === category}
-            onClick={() => setActiveCategory(category)}
+            key={category._id}
+            active={activeCategorySlug === category.slug}
+            onClick={() => onCategoryChange(category.slug)}
           >
-            {category}
+            {category.name}
           </NavItem>
         ))}
       </NavItems>

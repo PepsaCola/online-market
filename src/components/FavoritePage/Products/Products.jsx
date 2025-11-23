@@ -15,7 +15,7 @@ export const Products = () => {
   if (!wishlist || wishlist.length === 0) {
     return (
       <EmptyWrapper>
-        <EmptyText>Список обраного порожній</EmptyText>
+        <EmptyText>Список обраного порожній.</EmptyText>
       </EmptyWrapper>
     );
   }
@@ -28,7 +28,7 @@ export const Products = () => {
       </Header>
       <ProductList>
         {wishlist.map((item) => (
-          <ProductItem key={item.id} product={item} />
+          <ProductItem key={item._id} product={item} />
         ))}
       </ProductList>
     </ProductsContainer>

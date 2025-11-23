@@ -1,7 +1,14 @@
-import { Container, ProductLayout, ProductImage } from './styled';
+import {
+  Container,
+  ProductLayout,
+  ProductImage,
+  ProductsNav,
+  ProductsNavLink,
+  ProductsNavWrap,
+} from './styled';
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useParams, Outlet } from 'react-router-dom';
 import ProductInfoContainer from '../../components/ProductPage/ProductInfo/ProductInfoContainer';
 import ProductImages from '../../components/ProductPage/ProductImages';
 
@@ -49,7 +56,6 @@ export const ProductPage = () => {
 
     if (productFound) {
       setSingleProduct(productFound);
-
       try {
         localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(productFound));
       } catch (err) {
@@ -95,7 +101,16 @@ export const ProductPage = () => {
           </div>
           <ProductInfoContainer singleProduct={singleProduct} options={options} />
         </ProductLayout>
-        {/*<ProductCharacteristics></ProductCharacteristics>*/}
+
+        <ProductsNavWrap>
+          <ProductsNav>
+            {singleProduct.description && (
+              <ProductsNavLink to="description">Description</ProductsNavLink>
+            )}
+            {singleProduct?.reviews && <ProductsNavLink to="review">Review</ProductsNavLink>}
+          </ProductsNav>
+          <Outlet />
+        </ProductsNavWrap>
       </>
     </Container>
   );

@@ -16,36 +16,49 @@ const limit = 8;
 export const Main = () => {
   const [query, setQuery] = useState('');
   const [page, setPage] = useState(1);
+  const [activeCategorySlug, setActiveCategorySlug] = useState(null);
   const dispatch = useDispatch();
-  const { items, loading, error } = useSelector(getProducts);
-  useEffect(() => {
-    setPage(1);
-  }, [query]);
+  const { items, loading, error, categories } = useSelector(getProducts);
 
   useEffect(() => {
-    dispatch(fetchProducts({ page: page, limit: limit, title: query }));
-  }, [dispatch, page, query]);
+    setPage(1);
+  }, [query, activeCategorySlug]);
+
+  useEffect(() => {
+    dispatch(
+      fetchProducts({
+        page: page,
+        limit: limit,
+        title: query,
+        category: activeCategorySlug,
+      }),
+    );
+  }, [dispatch, page, query, activeCategorySlug]);
 
   const handleLoadMore = () => {
     setPage((prevPage) => prevPage + 1);
   };
-  const popularItems = items.slice(0, 4);
 
   return (
     <>
       <Container>
         <MainBlock />
         <MainSearchForm query={query} setQuery={setQuery} />
-        <PopularProducts items={popularItems} loading={loading} error={error} />
+        <PopularProducts />
         <CategoryTitle>Category</CategoryTitle>
-        <StyledSpan />
+
+        <StyledSpan
+          categories={categories || []}
+          activeCategorySlug={activeCategorySlug}
+          onCategoryChange={setActiveCategorySlug}
+        />
+
         <ProductGrid>
           {loading && items.length === 0 && <p>Завантаження...</p>}
           {error && <p>Помилка: {error}</p>}
           {!error &&
-            items.map((item, index) => (
-              <ItemCard key={item.id || index} item={{ ...item, isSimpleAdd: index % 3 !== 0 }} />
-            ))}
+            Array.isArray(items) &&
+            items.map((item, index) => <ItemCard key={item._id || index} item={item} />)}
           {loading && items.length > 0 && <p>Завантаження...</p>}
         </ProductGrid>
         <LoadMoreButton onClick={handleLoadMore} />

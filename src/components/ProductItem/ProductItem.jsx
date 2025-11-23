@@ -10,16 +10,19 @@ import {
   RemoveIcon,
 } from './styled';
 import { useWishlist } from '../../features/favorite/favorite';
+import { useCart } from '../../pages/CartPage/context/CartContext';
 
 export const ProductItem = ({ product }) => {
-  const imageUrl =
-    product.images && product.images.length > 0
-      ? product.images[0]
-      : 'https://via.placeholder.com/80';
-
+  const imageUrl = product.images?.[0] || 'https://via.placeholder.com/80';
   const { removeFromWishlist } = useWishlist();
+  const { addToCart } = useCart();
+
   const handleRemoveClick = () => {
     removeFromWishlist(product._id);
+  };
+
+  const handleAddToCart = () => {
+    addToCart(product);
   };
 
   return (
@@ -31,7 +34,8 @@ export const ProductItem = ({ product }) => {
         </ProductInfo>
       </ProductDetails>
       <Price>${product.price.toFixed(2)}</Price>
-      <ActionButton>Add To Cart</ActionButton>
+      <ActionButton onClick={handleAddToCart}>Add To Cart</ActionButton>
+
       <RemoveIcon width={18} height={20} onClick={handleRemoveClick} />
     </ItemRow>
   );

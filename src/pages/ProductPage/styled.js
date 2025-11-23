@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components';
+import { NavLink } from 'react-router-dom';
 
 export const Container = styled.div`
   max-width: 1400px;
@@ -92,7 +93,6 @@ export const ProductLikeBtn = styled.button`
   transition: 0.3s;
   border-radius: 8px;
   font-size: 24px;
-  color: #2740b9;
 
   background-color: white;
   color: ${(props) => (props.isActive ? '#EF4444' : '#595959')};
@@ -159,5 +159,28 @@ export const TabContent = styled.div`
   li {
     list-style: none;
     line-height: 1.6;
+  }
+`;
+
+export const ProductsNavWrap = styled.div`
+  display: flex;
+  gap: 62px;
+  flex-direction: column;
+  margin-top: 80px;
+  align-items: center;
+  justify-content: center;
+`;
+export const ProductsNav = styled.ul`
+  display: flex;
+`;
+export const ProductsNavLink = styled(NavLink)`
+  padding: 16px 27px;
+  border-bottom: 1px solid black;
+  color: black;
+  text-decoration: none;
+  &.active {
+    padding-bottom: 14px;
+    color: #2740b9;
+    border-bottom: 3px solid #2740b9;
   }
 `;
