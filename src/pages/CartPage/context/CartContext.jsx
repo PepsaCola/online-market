@@ -8,7 +8,7 @@ export function CartProvider({ children }) {
       const storeCart = localStorage.getItem('cart');
       return storeCart ? JSON.parse(storeCart) : [];
     } catch (err) {
-      console.log('Local storage: ' + err);
+      console.error('Local storage error:', err);
       return [];
     }
   });
@@ -40,6 +40,7 @@ export function CartProvider({ children }) {
   const removeFromCart = (id) => {
     setCart((prev) => prev.filter((item) => item._id !== id));
   };
+
   return (
     <CartContext.Provider value={{ cart, addToCart, removeFromCart }}>
       {children}
