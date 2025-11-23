@@ -35,7 +35,7 @@ export const OptionButton = styled.div`
       border-color: ${props.isActive ? '#2740B9' : '#eee'};
 
       &:hover {
-        border-color: #2740b9; /* Приклад ховеру для кольору */
+        border-color: #2740b9;
       }
     `}
 

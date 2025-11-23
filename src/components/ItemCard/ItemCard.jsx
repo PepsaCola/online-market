@@ -19,14 +19,14 @@ export const ItemCard = ({ item }) => {
     e.preventDefault();
     e.stopPropagation();
     if (isLiked) {
-      removeFromWishlist(item.id);
+      removeFromWishlist(item._id);
     } else {
       addToWishlist(item);
     }
   };
 
   return (
-    <Container to={`/products/${item.id}`}>
+    <Container to={`/products/${item._id}`}>
       <Img alt={item.slug} src={image} />
       <Name>{item.title}</Name>
       <Price>{item.price} $</Price>

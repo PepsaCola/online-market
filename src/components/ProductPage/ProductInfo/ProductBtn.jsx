@@ -12,11 +12,11 @@ const ProductBtnContainer = ({ product }) => {
     return null;
   }
 
-  const isInCart = cart.some((item) => item.id === product.id);
+  const isInCart = cart.some((item) => item._id === product._id);
 
   const handleCartClick = () => {
     if (isInCart) {
-      removeFromCart(product.id);
+      removeFromCart(product._id);
       toast.error(`${product.title || 'Item'} removed from cart.`);
     } else {
       addToCart(product);

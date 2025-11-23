@@ -33,7 +33,7 @@ const ProductImages = ({ images, onMainImgClick, activeImage }) => {
               src={img}
               alt={img}
               onClick={() => onMainImgClick(img)}
-              isActive={isActive}
+              $isActive={isActive}
             />
           </li>
         );

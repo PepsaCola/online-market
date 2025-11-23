@@ -1,8 +1,7 @@
 import { Container, ProductLayout, ProductImage } from './styled';
 import { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-// import { fetchProductsById } from '../../features/products/productsThunks';
 import ProductInfoContainer from '../../components/ProductPage/ProductInfo/ProductInfoContainer';
 import ProductImages from '../../components/ProductPage/ProductImages';
 
@@ -17,12 +16,49 @@ const options = [
   },
 ];
 
+const LOCAL_STORAGE_KEY = 'currentViewedProduct';
+
 export const ProductPage = () => {
   const { id } = useParams();
-  const dispatch = useDispatch();
-  const { singleProduct, loading, error } = useSelector((state) => state.products);
 
+  const [singleProduct, setSingleProduct] = useState(null);
   const [mainImage, setMainImage] = useState(null);
+
+  const { items } = useSelector((state) => state.products);
+
+  useEffect(() => {
+    let productFound = null;
+
+    if (items.length > 0) {
+      productFound = items.find((item) => item._id === id);
+    }
+
+    if (!productFound) {
+      try {
+        const cachedData = localStorage.getItem(LOCAL_STORAGE_KEY);
+        if (cachedData) {
+          const cachedProduct = JSON.parse(cachedData);
+          if (cachedProduct._id === id) {
+            productFound = cachedProduct;
+          }
+        }
+      } catch (err) {
+        console.warn('Error reading product from localStorage', err);
+      }
+    }
+
+    if (productFound) {
+      setSingleProduct(productFound);
+
+      try {
+        localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(productFound));
+      } catch (err) {
+        console.warn('Error saving product in localStorage', err);
+      }
+    } else {
+      setSingleProduct(null);
+    }
+  }, [id, items]);
 
   useEffect(() => {
     if (singleProduct?.images && singleProduct.images.length > 0) {
@@ -30,39 +66,37 @@ export const ProductPage = () => {
     }
   }, [singleProduct]);
 
-  useEffect(() => {
-    if (id) {
-      // const numericId = parseInt(id, 10);
-      // dispatch(fetchProductsById(numericId));
-    }
-  }, [id, dispatch]);
-
-  // console.log('singleProduct:', singleProduct);
-
   const handleMainImgClick = (imgUrl) => {
     setMainImage(imgUrl);
   };
 
+  if (!singleProduct) {
+    return (
+      <Container>
+        <p>Loading product...</p>
+        <p>
+          (Oops.. Return to <a href="/">Main</a> and try again.)
+        </p>
+      </Container>
+    );
+  }
+
   return (
     <Container>
-      {loading && <p>Завантаження...</p>}
-      {error && <p>Помилка: {error.message}</p>}
-      {!loading && !error && (
-        <>
-          <ProductLayout>
-            <div>
-              <ProductImage src={mainImage} alt={singleProduct?.title} />
-              <ProductImages
-                onMainImgClick={handleMainImgClick}
-                images={singleProduct?.images}
-                activeImage={mainImage}
-              />
-            </div>
-            <ProductInfoContainer singleProduct={singleProduct} options={options} />
-          </ProductLayout>
-          {/*<ProductCharacteristics></ProductCharacteristics>*/}
-        </>
-      )}
+      <>
+        <ProductLayout>
+          <div>
+            <ProductImage src={mainImage} alt={singleProduct?.title} />
+            <ProductImages
+              onMainImgClick={handleMainImgClick}
+              images={singleProduct?.images}
+              activeImage={mainImage}
+            />
+          </div>
+          <ProductInfoContainer singleProduct={singleProduct} options={options} />
+        </ProductLayout>
+        {/*<ProductCharacteristics></ProductCharacteristics>*/}
+      </>
     </Container>
   );
 };
