@@ -3,25 +3,26 @@ import axiosInstance from '../../api/axiosInstance';
 
 export const fetchProducts = createAsyncThunk(
   'products/fetchAll',
-  async ({ page = 1, limit = 20, title }, { rejectWithValue }) => {
+  async ({ page = 1, limit = 20, title, category }, { rejectWithValue }) => {
     try {
       const params = {
         page: page,
         limit: limit,
       };
-      const response = await axiosInstance.get(`/products`, { params });
-      const totalParams = {};
       if (title) {
-        totalParams.title = title;
+        params.title = title;
+      }
+      if (category) {
+        params.category = category;
       }
 
-      const totalResponse = await axiosInstance.get('/products', { params: totalParams });
+      const response = await axiosInstance.get(`/products`, { params });
       const categories = await axiosInstance.get(`/categories`);
 
       return {
-        data: response.data.data,
+        data: response.data.data, // Масив товарів
         page,
-        totalCount: totalResponse.data.length,
+        totalCount: response.data.totalCount,
         categories: categories.data,
       };
     } catch (error) {

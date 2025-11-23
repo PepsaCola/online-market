@@ -1,11 +1,32 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import { getProducts } from '../../../features/products/selectors';
+import React, { useEffect, useState } from 'react';
 import { ItemCard } from '../../ItemCard/ItemCard';
 import { ShowcaseBackground, SectionTitle, ShowcaseSection, CardsGrid } from './styled';
+import axiosInstance from '../../../api/axiosInstance';
 
-export const PopularProducts = ({ items }) => {
-  const { loading, error } = useSelector(getProducts);
+export const PopularProducts = () => {
+  const [popularItems, setPopularItems] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchPopular = async () => {
+      try {
+        setLoading(true);
+        const response = await axiosInstance.get('/products', {
+          params: {
+            page: 1,
+            limit: 4,
+          },
+        });
+        setPopularItems(response.data.data);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchPopular();
+  }, []);
 
   return (
     <ShowcaseSection>
@@ -14,10 +35,11 @@ export const PopularProducts = ({ items }) => {
 
       <CardsGrid>
         {loading && <p>Завантаження популярних товарів...</p>}
-        {error && <p>Помилка завантаження популярних товарів: {error}</p>}
+        {error && <p>Помилка: {error}</p>}
+
         {!loading &&
           !error &&
-          items.map((item) => <ItemCard key={item.id || item.name} item={item} />)}
+          popularItems.map((item) => <ItemCard key={item._id || item.id} item={item} />)}
       </CardsGrid>
     </ShowcaseSection>
   );
