@@ -109,7 +109,8 @@ export const CartItemsList = styled.ul`
     max-width: 100px;
   }
 
-  .item-title {
+  .item-title,
+  .options {
     padding: 8px 16px;
   }
 
@@ -122,6 +123,16 @@ export const CartItemsList = styled.ul`
     background: inherit;
     font-size: 24px;
     cursor: pointer;
+  }
+
+  .option-box {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .options {
+    color: #666;
+    font-size: 12px;
   }
 `;
 

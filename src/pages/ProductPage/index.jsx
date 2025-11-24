@@ -11,17 +11,7 @@ import { useSelector } from 'react-redux';
 import { useParams, Outlet } from 'react-router-dom';
 import ProductInfoContainer from '../../components/ProductPage/ProductInfo/ProductInfoContainer';
 import ProductImages from '../../components/ProductPage/ProductImages';
-
-const options = [
-  {
-    type: 'Color',
-    variants: ['pink', 'green', 'blue'],
-  },
-  {
-    type: 'Size',
-    variants: ['M', 'L', 'XL'],
-  },
-];
+import { getOptionsForProduct } from './data/productOptions';
 
 const LOCAL_STORAGE_KEY = 'currentViewedProduct';
 
@@ -30,6 +20,7 @@ export const ProductPage = () => {
 
   const [singleProduct, setSingleProduct] = useState(null);
   const [mainImage, setMainImage] = useState(null);
+  const [dynamicOptions, setDynamicOptions] = useState([]);
 
   const { items } = useSelector((state) => state.products);
 
@@ -37,7 +28,7 @@ export const ProductPage = () => {
     let productFound = null;
 
     if (items.length > 0) {
-      productFound = items.find((item) => item._id === id);
+      productFound = items.find((item) => item._id === id || item.id === id);
     }
 
     if (!productFound) {
@@ -45,7 +36,7 @@ export const ProductPage = () => {
         const cachedData = localStorage.getItem(LOCAL_STORAGE_KEY);
         if (cachedData) {
           const cachedProduct = JSON.parse(cachedData);
-          if (cachedProduct._id === id) {
+          if (cachedProduct._id === id || cachedProduct.id === id) {
             productFound = cachedProduct;
           }
         }
@@ -56,6 +47,10 @@ export const ProductPage = () => {
 
     if (productFound) {
       setSingleProduct(productFound);
+
+      const options = getOptionsForProduct(productFound);
+      setDynamicOptions(options);
+
       try {
         localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(productFound));
       } catch (err) {
@@ -99,7 +94,7 @@ export const ProductPage = () => {
               activeImage={mainImage}
             />
           </div>
-          <ProductInfoContainer singleProduct={singleProduct} options={options} />
+          <ProductInfoContainer singleProduct={singleProduct} options={dynamicOptions} />
         </ProductLayout>
 
         <ProductsNavWrap>
@@ -107,7 +102,9 @@ export const ProductPage = () => {
             {singleProduct.description && (
               <ProductsNavLink to="description">Description</ProductsNavLink>
             )}
-            {singleProduct?.reviews && <ProductsNavLink to="review">Review</ProductsNavLink>}
+            <ProductsNavLink to="review">
+              Reviews ({singleProduct.reviews ? singleProduct.reviews.length : 0})
+            </ProductsNavLink>
           </ProductsNav>
           <Outlet />
         </ProductsNavWrap>

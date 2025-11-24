@@ -14,19 +14,29 @@ const ProductInfoContainer = ({ singleProduct, options }) => {
     }));
   };
 
+  const isSelectionComplete =
+    options && options.length > 0 ? Object.keys(selectedOptions).length === options.length : true;
+
   return (
     <ProductInfo>
       <h1>{singleProduct?.title}</h1>
       <StarRating rating={singleProduct?.rating || 4.5} />
       <p>${singleProduct?.price.toFixed(2)}</p>
 
-      <ProductOptionsGroup
-        options={options}
-        selectedOptions={selectedOptions}
-        onOptionSelect={handleOptionSelect}
-      />
+      {options && options.length > 0 && (
+        <ProductOptionsGroup
+          options={options}
+          selectedOptions={selectedOptions}
+          onOptionSelect={handleOptionSelect}
+        />
+      )}
 
-      <ProductBtnContainer product={singleProduct} selectedQty={1} />
+      <ProductBtnContainer
+        product={singleProduct}
+        selectedQty={1}
+        selectedOptions={selectedOptions}
+        isDisabled={!isSelectionComplete}
+      />
     </ProductInfo>
   );
 };

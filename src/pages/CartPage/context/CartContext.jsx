@@ -10,19 +10,37 @@ export function CartProvider({ children }) {
   const [cart, setCart] = useState([]);
   const token = useSelector(getToken);
 
-  // 1. Завантаження кошика з сервера при вході
+  const saveLocalData = (currentCart) => {
+    const metaData = {};
+    currentCart.forEach((item) => {
+      metaData[item._id] = {
+        qty: item.qty,
+        selectedOptions: item.selectedOptions,
+      };
+    });
+    localStorage.setItem('cart_local_data', JSON.stringify(metaData));
+  };
+
   useEffect(() => {
     const loadCart = async () => {
       if (token) {
         try {
           const response = await getUserData();
-          const serverCart = response.data.bucketProducts.map((item) => ({
-            ...item,
-            qty: 1,
-          }));
+          const localData = JSON.parse(localStorage.getItem('cart_local_data') || '{}');
+
+          const serverCart = response.data.bucketProducts.map((item) => {
+            const localItem = localData[item._id] || {};
+            return {
+              ...item,
+              qty: localItem.qty || 1,
+              selectedOptions: localItem.selectedOptions || {},
+            };
+          });
+
           setCart(serverCart);
+          saveLocalData(serverCart);
         } catch (error) {
-          console.error('Can`t load cart', error);
+          console.error(error);
         }
       } else {
         setCart([]);
@@ -31,24 +49,34 @@ export function CartProvider({ children }) {
     loadCart();
   }, [token]);
 
-  const addToCart = async (product, amount = 1) => {
+  const addToCart = async (product, amount = 1, options = {}) => {
     const existingItem = cart.find((item) => item._id === product._id);
 
     if (existingItem) {
-      setCart((prev) =>
-        prev.map((item) => (item._id === product._id ? { ...item, qty: item.qty + amount } : item)),
+      const newCart = cart.map((item) =>
+        item._id === product._id
+          ? { ...item, qty: item.qty + amount, selectedOptions: options }
+          : item,
       );
-      toast.success(`Added ${amount} items locally`);
+      setCart(newCart);
+      saveLocalData(newCart);
+      toast.success(`Added locally`);
     } else {
       try {
         await addToBucket(product._id);
-        setCart((prev) => [...prev, { ...product, qty: amount }]);
+        const newItem = { ...product, qty: amount, selectedOptions: options };
+        const newCart = [...cart, newItem];
+        setCart(newCart);
+        saveLocalData(newCart);
         toast.success('Product added to bucket!');
       } catch (error) {
         if (error.response?.status === 400) {
-          setCart((prev) => [...prev, { ...product, qty: amount }]);
+          const newItem = { ...product, qty: amount, selectedOptions: options };
+          const newCart = [...cart, newItem];
+          setCart(newCart);
+          saveLocalData(newCart);
         } else {
-          toast.error('Failed to add to bucket');
+          toast.error('Failed to add');
         }
       }
     }
@@ -57,7 +85,9 @@ export function CartProvider({ children }) {
   const removeFromCart = async (id) => {
     try {
       await removeFromBucket(id);
-      setCart((prev) => prev.filter((item) => item._id !== id));
+      const newCart = cart.filter((item) => item._id !== id);
+      setCart(newCart);
+      saveLocalData(newCart);
       toast.info('Removed from bucket');
     } catch (error) {
       console.error(error);
@@ -66,22 +96,23 @@ export function CartProvider({ children }) {
   };
 
   const increaseQty = (id) => {
-    setCart((prev) =>
-      prev.map((item) => (item._id === id ? { ...item, qty: item.qty + 1 } : item)),
-    );
+    const newCart = cart.map((item) => (item._id === id ? { ...item, qty: item.qty + 1 } : item));
+    setCart(newCart);
+    saveLocalData(newCart);
   };
 
   const decreaseQty = (id) => {
-    setCart(
-      (prev) =>
-        prev
-          .map((item) => (item._id === id ? { ...item, qty: item.qty - 1 } : item))
-          .filter((item) => item.qty > 0), // Якщо 0, фільтруємо (але краще не видаляти з API тут, а лишати 1)
-    );
+    const newCart = cart
+      .map((item) => (item._id === id ? { ...item, qty: item.qty - 1 } : item))
+      .filter((item) => item.qty > 0);
+
+    setCart(newCart);
+    saveLocalData(newCart);
   };
 
   const clearLocalCart = () => {
     setCart([]);
+    localStorage.removeItem('cart_local_data');
   };
 
   return (

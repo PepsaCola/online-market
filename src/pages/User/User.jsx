@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Container,
   InformationTitle,
@@ -50,7 +50,6 @@ export const User = () => {
     try {
       const stored = JSON.parse(localStorage.getItem('orders_meta') || '{}');
       setLocalMeta(stored);
-      console.log('Keys inside LocalStorage:', Object.keys(stored));
     } catch (e) {
       console.error(e);
     }
@@ -61,7 +60,6 @@ export const User = () => {
         setUserData(response.data);
         const history = response.data.ordersHistory || [];
         setOrders(history.reverse());
-        console.log('Orders from API:', history);
       } catch (error) {
         console.error(error);
       }
@@ -74,15 +72,12 @@ export const User = () => {
     if (localMeta[orderDateString]) {
       return localMeta[orderDateString];
     }
-
     const orderTime = new Date(orderDateString).getTime();
-
     const foundKey = Object.keys(localMeta).find((key) => {
       const localTime = new Date(key).getTime();
-      const diff = Math.abs(orderTime - localTime);
-      return diff < 2000;
+      // Допуск 5 секунд на різницю в часі
+      return Math.abs(orderTime - localTime) < 5000;
     });
-
     return foundKey ? localMeta[foundKey] : {};
   };
 
@@ -132,9 +127,9 @@ export const User = () => {
           <div style={{ display: 'flex', flexDirection: 'column', gap: '30px', width: '100%' }}>
             {orders.map((order) => {
               const meta = findSavedMeta(order.addedAt);
-
               const savedCustomer = meta.customer || {};
               const savedQuantities = meta.quantities || {};
+              const savedOptions = meta.options || {};
 
               const displayName = savedCustomer.name || userData?.username || 'User';
               const displayCard = savedCustomer.card
@@ -142,16 +137,15 @@ export const User = () => {
                 : '****';
               const displayCity = savedCustomer.city || '---';
               const displayPhone = savedCustomer.phone || '---';
-
-              let displayAddress = 'Address not saved';
-              if (savedCustomer.street && savedCustomer.houseNum) {
-                displayAddress = `${savedCustomer.street}, ${savedCustomer.houseNum}`;
-              }
+              const displayAddress = savedCustomer.street
+                ? `${savedCustomer.street}, ${savedCustomer.houseNum}`
+                : 'Standard Delivery';
 
               let calculatedTotal = 0;
 
               const renderedItems = order.items.map((item) => {
                 const productId = item.product?._id || item.product || item._id || item;
+
                 const productDetails =
                   allProducts.find((p) => p._id === productId) ||
                   (typeof item === 'object' ? item : {}) ||
@@ -166,13 +160,31 @@ export const User = () => {
 
                 const qty = savedQuantities[productId] || item.qty || 1;
 
+                const options = savedOptions[productId] || {};
+                const optionsStr = Object.entries(options)
+                  .map(([k, v]) => `${k}: ${v}`)
+                  .join(', ');
+
                 calculatedTotal += price * qty;
 
                 return (
                   <ProductRow key={productId + Math.random()}>
                     <ProductInfoBox>
                       <ProductImage src={image} alt={title} />
-                      <h4>{title}</h4>
+                      <div
+                        style={{
+                          display: 'flex',
+                          flexDirection: 'column',
+                          justifyContent: 'center',
+                          alignItems: 'flex-start',
+                        }}
+                      >
+                        <h4 style={{ margin: '0 0 5px 0' }}>{title}</h4>
+
+                        {optionsStr && (
+                          <span style={{ fontSize: '13px', color: '#777' }}>{optionsStr}</span>
+                        )}
+                      </div>
                     </ProductInfoBox>
                     <div className="qty">{qty}</div>
                     <div className="price">${(price * qty).toFixed(2)}</div>
@@ -181,11 +193,9 @@ export const User = () => {
               });
 
               const finalTotal =
-                calculatedTotal > 0
-                  ? calculatedTotal
-                  : order.totalAmount
-                    ? Number(order.totalAmount)
-                    : 0;
+                order.totalAmount && order.totalAmount > 0
+                  ? Number(order.totalAmount)
+                  : calculatedTotal;
 
               return (
                 <OrderContainer key={order._id || order.id}>

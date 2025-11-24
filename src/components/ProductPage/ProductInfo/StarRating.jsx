@@ -27,11 +27,7 @@ const StarRating = ({ rating }) => {
     return <FaRegStar key={i} />;
   });
 
-  return (
-    <StarContainer>
-      {stars} <span>13 reviews</span>
-    </StarContainer>
-  );
+  return <StarContainer>{stars}</StarContainer>;
 };
 
 export default StarRating;
