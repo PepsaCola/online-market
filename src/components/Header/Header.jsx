@@ -10,7 +10,7 @@ import {
   LikeLink,
 } from './styled';
 import { useCart } from '../../pages/CartPage/context/CartContext.jsx';
-import { useWishlist } from '../../features/favorite/favorite';
+import { useWishlist } from '../../features/products/favorite';
 import { useNavigate } from 'react-router-dom';
 
 export const Header = () => {

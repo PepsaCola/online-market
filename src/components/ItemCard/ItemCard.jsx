@@ -10,7 +10,7 @@ import {
   Name,
   Price,
 } from './styled';
-import { useWishlist } from '../../features/favorite/favorite';
+import { useWishlist } from '../../features/products/favorite';
 import { useCart } from '../../pages/CartPage/context/CartContext';
 
 export const ItemCard = ({ item }) => {

@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { register, login, logout, fetchCurrentUser } from './authThunks';
+import { addToFavorite, removeFromFavorite } from './favoriteThunks';
 
 const initialState = {
   user: {
@@ -69,7 +70,7 @@ const authSlice = createSlice({
         state.error = action.payload;
       })
       .addCase(fetchCurrentUser.pending, (state) => {
-        state.isRefreshing = true; // Показуємо лоадер на весь додаток
+        state.isRefreshing = true;
         state.loading = true;
       })
       .addCase(fetchCurrentUser.fulfilled, (state, action) => {
@@ -84,10 +85,30 @@ const authSlice = createSlice({
         state.isLoggedIn = false;
         state.isRefreshing = false;
         state.loading = false;
+      })
+      .addCase(addToFavorite.fulfilled, (state, action) => {
+        if (!state.user.savedProducts) state.user.savedProducts = [];
+        const newProduct = action.payload.itemId;
+        state.user.savedProducts.push(newProduct);
+      })
+      .addCase(addToFavorite.rejected, (state, action) => {
+        console.error('ERROR:', action.payload);
+        state.error = action.payload;
+      })
+      .addCase(removeFromFavorite.fulfilled, (state, action) => {
+        if (!state.user.savedProducts) return;
+
+        const removedItem = action.payload.itemId;
+        const removedId = removedItem?._id || removedItem;
+
+        state.user.savedProducts = state.user.savedProducts.filter(
+          (item) => item._id !== removedId,
+        );
       });
   },
 });
 
 export const { clearError } = authSlice.actions;
 export const getAuth = (state) => state.auth;
+export const getUserSavedProducts = (state) => state.auth.user?.savedProducts || [];
 export default authSlice.reducer;

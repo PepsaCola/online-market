@@ -24,14 +24,10 @@ export const SignUp = () => {
   const [password, setPassword] = useState('');
   const error = useSelector(selectError);
   const loading = useSelector(selectIsLoading);
-  const handleSubmit = async (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
-    try {
-      await dispatch(register({ username, email, password })).unwrap();
-      navigate('/shop');
-    } catch (err) {
-      // Помилка обробляється автоматично у Redux (authSlice.js)
-    }
+    dispatch(register({ username, email, password })).unwrap();
+    navigate('/shop');
   };
 
   return (

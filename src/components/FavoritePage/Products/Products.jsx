@@ -1,5 +1,5 @@
 import React from 'react';
-import { useWishlist } from '../../../features/favorite/favorite';
+import { useWishlist } from '../../../features/products/favorite';
 import { ProductItem } from '../../ProductItem/ProductItem';
 import {
   ProductsContainer,

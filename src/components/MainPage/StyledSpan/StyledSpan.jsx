@@ -5,7 +5,6 @@ export const StyledSpan = ({ categories, activeCategorySlug, onCategoryChange })
   return (
     <NavContainer>
       <NavItems>
-        {/* Кнопка "All" */}
         <NavItem active={activeCategorySlug === null} onClick={() => onCategoryChange(null)}>
           All
         </NavItem>
