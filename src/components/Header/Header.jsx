@@ -9,7 +9,7 @@ import {
   StyledLink,
   LikeLink,
 } from './styled';
-import { useWishlist } from '../../features/favorite/favorite';
+import { useWishlist } from '../../features/products/favorite';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { getCarts } from '../../features/auth/selectors';

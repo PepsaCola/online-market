@@ -104,7 +104,6 @@ const authSlice = createSlice({
         state.error = null;
       })
       .addCase(deleteBucketThunk.fulfilled, (state, action) => {
-        // ОНОВЛЕННЯ НАЗВИ
         state.loading = false;
         state.user.bucketProducts = action.payload.bucketProducts;
       })

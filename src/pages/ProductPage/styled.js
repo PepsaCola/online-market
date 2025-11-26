@@ -95,7 +95,7 @@ export const ProductLikeBtn = styled.button`
   font-size: 24px;
 
   background-color: white;
-  color: ${(props) => (props.isActive ? '#EF4444' : '#595959')};
+  color: ${(props) => (props.$isActive ? '#EF4444' : '#595959')};
 
   &:hover {
     background-color: white;

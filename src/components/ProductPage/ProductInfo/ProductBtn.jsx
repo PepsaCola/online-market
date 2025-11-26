@@ -1,15 +1,18 @@
 import { ProductBtn, ProductCartBtn, ProductLikeBtn } from '../../../pages/ProductPage/styled';
 import { FaHeart } from 'react-icons/fa';
-import { useState } from 'react';
+
 import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCarts } from '../../../features/auth/selectors';
 import { addBucketThunk, deleteBucketThunk } from '../../../features/auth/bucketThunks';
+import { useWishlist } from '../../../features/products/favorite';
 
 const ProductBtnContainer = ({ product, selectedQty = 1, isDisabled = false }) => {
-  const [likeBtn, setLikeBtn] = useState(false);
   const cart = useSelector(getCarts);
   const dispatch = useDispatch();
+
+  const { isItemInWishlist, addToWishlist, removeFromWishlist } = useWishlist();
+  const isLiked = isItemInWishlist(product._id);
 
   if (!product) {
     return null;
@@ -33,7 +36,11 @@ const ProductBtnContainer = ({ product, selectedQty = 1, isDisabled = false }) =
   };
 
   const handleLikeBtnClick = () => {
-    setLikeBtn((currentLike) => !currentLike);
+    if (isLiked) {
+      removeFromWishlist(product._id);
+    } else {
+      addToWishlist(product);
+    }
   };
 
   return (
@@ -49,7 +56,7 @@ const ProductBtnContainer = ({ product, selectedQty = 1, isDisabled = false }) =
       >
         {isInCart ? 'Remove from Cart' : 'Add to Cart'}
       </ProductCartBtn>
-      <ProductLikeBtn $isActive={likeBtn} onClick={handleLikeBtnClick}>
+      <ProductLikeBtn $isActive={isLiked} onClick={handleLikeBtnClick}>
         <FaHeart />
       </ProductLikeBtn>
     </ProductBtn>

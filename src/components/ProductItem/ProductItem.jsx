@@ -22,7 +22,7 @@ export const ProductItem = ({ product }) => {
   };
 
   const handleAddToCart = () => {
-    dispatch(addBucketThunk(product._id));
+    dispatch(addBucketThunk({ id: product._id }));
   };
 
   return (
