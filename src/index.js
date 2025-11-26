@@ -7,7 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import App from './App';
 import './index.css';
 import { persistor, store } from './app/store';
-import { WishlistProvider } from './features/favorite/favorite';
+import { WishlistProvider } from './features/products/favorite';
 import { PersistGate } from 'redux-persist/integration/react';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

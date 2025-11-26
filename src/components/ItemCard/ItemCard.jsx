@@ -10,9 +10,9 @@ import {
   Name,
   Price,
 } from './styled';
-import { useWishlist } from '../../features/favorite/favorite';
 import { addBucketThunk } from '../../features/auth/bucketThunks';
 import { useDispatch } from 'react-redux';
+import { useWishlist } from '../../features/products/favorite';
 
 export const ItemCard = ({ item }) => {
   const image = item.images?.[0] || item.images?.[1] || './img/placeholder.jpg';
@@ -32,7 +32,6 @@ export const ItemCard = ({ item }) => {
   const handleCartClick = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    console.log(item._id);
     dispatch(addBucketThunk({ id: item._id }));
   };
 

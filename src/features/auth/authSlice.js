@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { register, login, logout, fetchCurrentUser } from './authThunks';
 import { addBucketThunk, deleteBucketThunk } from './bucketThunks';
+import { addToFavorite, removeFromFavorite } from './favoriteThunks';
 
 const initialState = {
   user: {
@@ -110,9 +111,30 @@ const authSlice = createSlice({
       .addCase(deleteBucketThunk.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+      })
+      .addCase(addToFavorite.fulfilled, (state, action) => {
+        if (!state.user.savedProducts) state.user.savedProducts = [];
+        const newProduct = action.payload.itemId;
+        state.user.savedProducts.push(newProduct);
+      })
+      .addCase(addToFavorite.rejected, (state, action) => {
+        console.error('ERROR:', action.payload);
+        state.error = action.payload;
+      })
+      .addCase(removeFromFavorite.fulfilled, (state, action) => {
+        if (!state.user.savedProducts) return;
+
+        const removedItem = action.payload.itemId;
+        const removedId = removedItem?._id || removedItem;
+
+        state.user.savedProducts = state.user.savedProducts.filter(
+          (item) => item._id !== removedId,
+        );
       });
   },
 });
 
 export const { clearError } = authSlice.actions;
+export const getAuth = (state) => state.auth;
+export const getUserSavedProducts = (state) => state.auth.user?.savedProducts || [];
 export default authSlice.reducer;

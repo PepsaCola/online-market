@@ -9,9 +9,9 @@ import {
   ActionButton,
   RemoveIcon,
 } from './styled';
-import { useWishlist } from '../../features/favorite/favorite';
 import { useDispatch } from 'react-redux';
 import { addBucketThunk } from '../../features/auth/bucketThunks';
+import { useWishlist } from '../../features/products/favorite';
 
 export const ProductItem = ({ product }) => {
   const imageUrl = product.images?.[0] || 'https://via.placeholder.com/80';
