@@ -1,11 +1,11 @@
-import { useCart } from './context/CartContext.jsx';
 import { CartContainer, CartInfo } from './styled';
 import PaymentForm from '../../components/CartPage/PaymentForm/PaymentForm.jsx';
 import CartItems from '../../components/CartPage/CartInfo/CartItems';
+import { useSelector } from 'react-redux';
+import { getCarts } from '../../features/auth/selectors';
 
 const CartPage = () => {
-  const { cart } = useCart();
-  console.log(cart);
+  const cart = useSelector(getCarts);
 
   return (
     <CartContainer>

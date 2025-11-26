@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { register, login, logout, fetchCurrentUser } from './authThunks';
+import { addBucketThunk, deleteBucketThunk } from './bucketThunks';
 
 const initialState = {
   user: {
@@ -69,7 +70,7 @@ const authSlice = createSlice({
         state.error = action.payload;
       })
       .addCase(fetchCurrentUser.pending, (state) => {
-        state.isRefreshing = true; // Показуємо лоадер на весь додаток
+        state.isRefreshing = true;
         state.loading = true;
       })
       .addCase(fetchCurrentUser.fulfilled, (state, action) => {
@@ -84,10 +85,34 @@ const authSlice = createSlice({
         state.isLoggedIn = false;
         state.isRefreshing = false;
         state.loading = false;
+      })
+      .addCase(addBucketThunk.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(addBucketThunk.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user.bucketProducts = action.payload.bucketProducts;
+      })
+      .addCase(addBucketThunk.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(deleteBucketThunk.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(deleteBucketThunk.fulfilled, (state, action) => {
+        // ОНОВЛЕННЯ НАЗВИ
+        state.loading = false;
+        state.user.bucketProducts = action.payload.bucketProducts;
+      })
+      .addCase(deleteBucketThunk.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
       });
   },
 });
 
 export const { clearError } = authSlice.actions;
-export const getAuth = (state) => state.auth;
 export default authSlice.reducer;

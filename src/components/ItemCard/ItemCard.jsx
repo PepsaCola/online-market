@@ -11,14 +11,14 @@ import {
   Price,
 } from './styled';
 import { useWishlist } from '../../features/favorite/favorite';
-import { useCart } from '../../pages/CartPage/context/CartContext';
+import { addBucketThunk } from '../../features/auth/bucketThunks';
+import { useDispatch } from 'react-redux';
 
 export const ItemCard = ({ item }) => {
   const image = item.images?.[0] || item.images?.[1] || './img/placeholder.jpg';
   const { addToWishlist, removeFromWishlist, isItemInWishlist } = useWishlist();
-  const { addToCart } = useCart();
   const isLiked = isItemInWishlist(item._id);
-
+  const dispatch = useDispatch();
   const handleLikeClick = (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -32,7 +32,8 @@ export const ItemCard = ({ item }) => {
   const handleCartClick = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    addToCart(item);
+    console.log(item._id);
+    dispatch(addBucketThunk({ id: item._id }));
   };
 
   return (

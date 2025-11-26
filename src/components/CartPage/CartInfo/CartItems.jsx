@@ -1,14 +1,23 @@
 import { CartItemsList, CartItemsContainer, TotalPrice } from '../../../pages/CartPage/styled';
 import { RxCross2 } from 'react-icons/rx';
 import Quantity from './Quantity';
-import { useCart } from '../../../pages/CartPage/context/CartContext';
+import { useDispatch } from 'react-redux';
+import { addBucketThunk, deleteBucketThunk } from '../../../features/auth/bucketThunks';
 
 const CartItems = ({ cart }) => {
-  const { increaseQty, decreaseQty, removeFromCart } = useCart();
+  const dispatch = useDispatch();
 
   const totalPrice = cart.reduce((total, item) => {
-    return total + item.price * item.qty;
+    return total + item.item.price * item.quantity;
   }, 0);
+
+  const handleIncrease = (id) => {
+    dispatch(addBucketThunk({ id }));
+  };
+
+  const handleDecreaseOrRemove = (id) => {
+    dispatch(deleteBucketThunk({ id }));
+  };
 
   return (
     <>
@@ -21,34 +30,30 @@ const CartItems = ({ cart }) => {
         </ul>
         <CartItemsList>
           {cart.map((item, index) => {
-            const optionsStr = item.selectedOptions
-              ? Object.entries(item.selectedOptions)
-                  .map(([key, val]) => `${key}: ${val}`)
-                  .join(', ')
-              : '';
-
             return (
-              <li key={item._id || index}>
+              <li key={item.item._id || index}>
                 <div>
                   <img
-                    src={item.images?.[0] || 'https://via.placeholder.com/80'}
-                    alt={item.title}
+                    src={item.item.images?.[0] || 'https://via.placeholder.com/80'}
+                    alt={item.item.title}
                   />
                   <div className="option-box">
-                    <p className="item-title">{item.title}</p>
-                    {optionsStr && <p className="options">{optionsStr}</p>}
+                    <p className="item-title">{item.item.title}</p>
                   </div>
                 </div>
 
                 <Quantity
-                  itemQty={item.qty}
-                  onIncrease={() => increaseQty(item._id)}
-                  onDecrease={() => decreaseQty(item._id)}
+                  itemQty={item.quantity}
+                  onIncrease={() => handleIncrease(item.item._id)}
+                  onDecrease={() => handleDecreaseOrRemove(item.item._id)}
                 />
 
-                <p>${(item.price * item.qty).toFixed(2)}</p>
+                <p>${(item.item.price * item.quantity).toFixed(2)}</p>
 
-                <button className="delete_btn" onClick={() => removeFromCart(item._id)}>
+                <button
+                  className="delete_btn"
+                  onClick={() => handleDecreaseOrRemove(item.item._id)}
+                >
                   <RxCross2 />
                 </button>
               </li>

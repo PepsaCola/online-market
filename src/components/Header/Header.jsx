@@ -9,12 +9,13 @@ import {
   StyledLink,
   LikeLink,
 } from './styled';
-import { useCart } from '../../pages/CartPage/context/CartContext.jsx';
 import { useWishlist } from '../../features/favorite/favorite';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { getCarts } from '../../features/auth/selectors';
 
 export const Header = () => {
-  const { cart } = useCart();
+  const cart = useSelector(getCarts);
   const { wishlist } = useWishlist();
   const navigate = useNavigate();
 

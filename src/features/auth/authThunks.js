@@ -24,8 +24,6 @@ export const login = createAsyncThunk('auth/login', async (credentials, { reject
     const { accessToken, user } = response.data;
     localStorage.setItem('accessToken', accessToken);
     setAuthHeader(accessToken);
-    console.log(accessToken);
-    console.log(user);
     return { accessToken, user };
   } catch (error) {
     return rejectWithValue(error.response?.data?.message || 'Помилка входу');

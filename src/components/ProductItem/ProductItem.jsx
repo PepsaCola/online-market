@@ -10,19 +10,19 @@ import {
   RemoveIcon,
 } from './styled';
 import { useWishlist } from '../../features/favorite/favorite';
-import { useCart } from '../../pages/CartPage/context/CartContext';
+import { useDispatch } from 'react-redux';
+import { addBucketThunk } from '../../features/auth/bucketThunks';
 
 export const ProductItem = ({ product }) => {
   const imageUrl = product.images?.[0] || 'https://via.placeholder.com/80';
   const { removeFromWishlist } = useWishlist();
-  const { addToCart } = useCart();
-
+  const dispatch = useDispatch();
   const handleRemoveClick = () => {
     removeFromWishlist(product._id);
   };
 
   const handleAddToCart = () => {
-    addToCart(product);
+    dispatch(addBucketThunk(product._id));
   };
 
   return (

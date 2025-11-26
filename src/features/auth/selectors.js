@@ -6,3 +6,4 @@ export const selectIsLoading = (state) => state.auth.loading;
 export const selectError = (state) => state.auth.error;
 export const selectIsRefreshing = (state) => state.auth.isRefreshing;
 export const selectUsername = (state) => state.auth.user.username;
+export const getCarts = (state) => state.auth.user.bucketProducts;

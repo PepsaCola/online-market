@@ -1,35 +1,33 @@
 import { ProductBtn, ProductCartBtn, ProductLikeBtn } from '../../../pages/ProductPage/styled';
 import { FaHeart } from 'react-icons/fa';
 import { useState } from 'react';
-import { useCart } from '../../../pages/CartPage/context/CartContext';
 import { toast } from 'react-toastify';
+import { useDispatch, useSelector } from 'react-redux';
+import { getCarts } from '../../../features/auth/selectors';
+import { addBucketThunk, deleteBucketThunk } from '../../../features/auth/bucketThunks';
 
-const ProductBtnContainer = ({
-  product,
-  selectedQty = 1,
-  selectedOptions = {},
-  isDisabled = false,
-}) => {
+const ProductBtnContainer = ({ product, selectedQty = 1, isDisabled = false }) => {
   const [likeBtn, setLikeBtn] = useState(false);
-  const { cart, addToCart, removeFromCart } = useCart();
+  const cart = useSelector(getCarts);
+  const dispatch = useDispatch();
 
   if (!product) {
     return null;
   }
 
-  const isInCart = cart.some((item) => item._id === product._id);
+  const isInCart = cart.some((item) => item.item?._id === product._id);
 
   const handleCartClick = () => {
-    if (isDisabled && !isInCart) {
+    if (isDisabled) {
       toast.error('Please select all options first');
       return;
     }
 
     if (isInCart) {
-      removeFromCart(product._id);
+      dispatch(deleteBucketThunk({ id: product._id }));
       toast.error(`${product.title || 'Item'} removed from cart.`);
     } else {
-      addToCart(product, selectedQty, selectedOptions);
+      dispatch(addBucketThunk({ id: product._id }));
       toast.success(`${selectedQty} x ${product.title} added!`);
     }
   };

@@ -1,5 +1,4 @@
 import { useForm } from 'react-hook-form';
-import { useCart } from '../../../pages/CartPage/context/CartContext';
 import { buyAllProducts } from '../../../api/cartApi';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
@@ -9,9 +8,11 @@ import {
   PaymentFormContainer,
   FormRow,
 } from '../../../pages/CartPage/styled';
+import { useSelector } from 'react-redux';
+import { getCarts } from '../../../features/auth/selectors';
 
 const PaymentForm = () => {
-  const { cart, clearLocalCart } = useCart();
+  const cart = useSelector(getCarts);
   const navigate = useNavigate();
 
   const {
@@ -59,7 +60,7 @@ const PaymentForm = () => {
         localStorage.setItem('orders_meta', JSON.stringify(existingData));
       }
 
-      clearLocalCart();
+      // clearLocalCart();
       toast.success('Order successfully created!');
       navigate('/user');
     } catch (error) {

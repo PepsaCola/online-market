@@ -7,7 +7,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import App from './App';
 import './index.css';
 import { persistor, store } from './app/store';
-import { CartProvider } from './pages/CartPage/context/CartContext';
 import { WishlistProvider } from './features/favorite/favorite';
 import { PersistGate } from 'redux-persist/integration/react';
 
@@ -18,12 +17,10 @@ root.render(
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <BrowserRouter>
-          <CartProvider>
-            <WishlistProvider>
-              <App />
-            </WishlistProvider>
-            <ToastContainer position="bottom-right" autoClose={2000} hideProgressBar />
-          </CartProvider>
+          <WishlistProvider>
+            <App />
+          </WishlistProvider>
+          <ToastContainer position="bottom-right" autoClose={2000} hideProgressBar />
         </BrowserRouter>
       </PersistGate>
     </Provider>

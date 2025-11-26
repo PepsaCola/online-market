@@ -20,7 +20,7 @@ export const fetchProducts = createAsyncThunk(
       const categories = await axiosInstance.get(`/categories`);
 
       return {
-        data: response.data.data, // Масив товарів
+        data: response.data.data,
         page,
         totalCount: response.data.totalCount,
         categories: categories.data,
