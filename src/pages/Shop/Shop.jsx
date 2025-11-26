@@ -9,19 +9,19 @@ import { SearchForm } from '../../components/SearchForm/SearchForm';
 import { useDebounce } from '../../hooks/useDebounce';
 import { CustomDropdown } from '../../components/CustomDropdown/CustomDropdown';
 
-const sortOptions = [
-  { value: '', label: 'Sort by' },
-  { value: 'price-asc', label: 'Price: Low to High' },
-  { value: 'price-desc', label: 'Price: High to Low' },
-  { value: 'name-asc', label: 'Name: A-Z' },
-];
+// const sortOptions = [
+//   { value: '', label: 'Sort by' },
+//   { value: 'price-asc', label: 'Price: Low to High' },
+//   { value: 'price-desc', label: 'Price: High to Low' },
+//   { value: 'name-asc', label: 'Name: A-Z' },
+// ];
 
 export const Shop = () => {
   const dispatch = useDispatch();
   const { items, loading, error, totalCount, limit, categories } = useSelector(getProducts);
   const [query, setQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
-  const [selectedSort, setSelectedSort] = useState(''); // State for sorting
+  // const [selectedSort, setSelectedSort] = useState(''); // State for sorting
   const [currentPage, setCurrentPage] = useState(1);
   const debouncedQuery = useDebounce(query, 500);
 
@@ -35,10 +35,10 @@ export const Shop = () => {
     setCurrentPage(1);
   };
 
-  const handleSortSelect = (sortValue) => {
-    setSelectedSort(sortValue);
-    setCurrentPage(1);
-  };
+  // const handleSortSelect = (sortValue) => {
+  //   setSelectedSort(sortValue);
+  //   setCurrentPage(1);
+  // };
 
   const handlePageChange = (newPage) => {
     if (newPage >= 1 && newPage <= totalPages) {
@@ -53,10 +53,10 @@ export const Shop = () => {
         limit,
         category: selectedCategory,
         title: debouncedQuery,
-        sortBy: selectedSort,
+        // sortBy: selectedSort,
       }),
     );
-  }, [dispatch, currentPage, limit, debouncedQuery, selectedCategory, selectedSort]);
+  }, [dispatch, currentPage, limit, debouncedQuery, selectedCategory /*selectedSort*/]);
 
   const totalPages = Math.ceil(totalCount / limit);
 
@@ -73,12 +73,12 @@ export const Shop = () => {
           />
         </FilterWrap>
 
-        <CustomDropdown
-          options={sortOptions}
-          selectedValue={selectedSort}
-          onSelect={handleSortSelect}
-          placeholder="Sort by"
-        />
+        {/*<CustomDropdown*/}
+        {/*  options={sortOptions}*/}
+        {/*  selectedValue={selectedSort}*/}
+        {/*  onSelect={handleSortSelect}*/}
+        {/*  placeholder="Sort by"*/}
+        {/*/>*/}
       </Filters>
 
       <Content>
