@@ -3,10 +3,22 @@ import ProductOptionItemContainer from './ProductInfo/ProductOptionItem';
 
 const ProductOptions = styled.ul`
   margin-top: 60px;
+
+  @media (max-width: 850px) {
+    margin-top: 20px;
+  }
+
+  @media (max-width: 700px) {
+    margin-top: 5px;
+  }
 `;
 
 const ProductOption = styled.div`
   margin-top: 32px;
+
+  @media (max-width: 700px) {
+    margin-top: 20px;
+  }
 `;
 
 const ProductOptionLabel = styled.h3`
@@ -15,12 +27,25 @@ const ProductOptionLabel = styled.h3`
   span {
     color: #444444;
   }
+
+  @media (max-width: 850px) {
+    font-size: 16px;
+  }
+
+  @media (max-width: 700px) {
+    font-size: 14px;
+  }
 `;
 
 const ProductOptionList = styled.ul`
   display: flex;
   gap: 12px;
   margin-top: 16px;
+
+  @media (max-width: 850px) {
+    margin-top: 10px;
+    gap: 8px;
+  }
 `;
 
 const ProductOptionsGroup = ({ options, selectedOptions, onOptionSelect }) => {

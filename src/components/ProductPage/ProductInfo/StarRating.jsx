@@ -15,6 +15,11 @@ const StarContainer = styled.div`
     font-weight: 300;
     margin-left: 16px;
   }
+
+  @media (max-width: 850px) {
+    font-size: 20px;
+    margin-top: 8px;
+  }
 `;
 
 const StarRating = ({ rating }) => {

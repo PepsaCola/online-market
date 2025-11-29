@@ -37,6 +37,10 @@ export const OptionButton = styled.div`
       &:hover {
         border-color: #2740b9;
       }
+
+      @media (max-width: 700px) {
+        padding: 12px;
+      }
     `}
 
   ${(props) =>
@@ -52,6 +56,14 @@ export const OptionButton = styled.div`
 
       &:hover {
         background-color: ${props.isActive ? '#2740B9' : '#f0f0f0'};
+      }
+
+      @media (max-width: 850px) {
+        padding: 5px 12px;
+      }
+
+      @media (max-width: 700px) {
+        font-size: 12px;
       }
     `}
 `;

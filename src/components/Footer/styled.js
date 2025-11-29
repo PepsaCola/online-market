@@ -7,6 +7,10 @@ import { ReactComponent as Instagram } from '../../img/Instagram.svg';
 export const Container = styled.div`
   width: 100%;
   padding: 24px 84px;
+
+  @media (max-width: 850px) {
+    padding: 24px 20px;
+  }
 `;
 export const Wrap = styled.div`
   width: 100%;
@@ -16,11 +20,20 @@ export const Wrap = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+
+  @media (max-width: 450px) {
+    padding: 0;
+    flex-direction: column;
+  }
 `;
 export const Title = styled.h2`
   color: white;
   font-size: 64px;
   justify-self: left;
+
+  @media (max-width: 450px) {
+    font-size: 32px;
+  }
 `;
 export const List = styled.ul`
   display: flex;
@@ -62,6 +75,12 @@ export const Form = styled.form`
   display: flex;
   flex-wrap: wrap;
   gap: 24px;
+
+  @media (max-width: 450px) {
+    flex-wrap: nowrap;
+    max-width: 400px;
+    flex-direction: column;
+  }
 `;
 export const Label = styled.label`
   width: 100%;
@@ -76,6 +95,10 @@ export const Input = styled.input`
   color: #343434;
   font-size: 24px;
   padding: 16px 22px;
+
+  @media (max-width: 450px) {
+    padding: 8px;
+  }
 `;
 export const Btn = styled.button`
   border: none;

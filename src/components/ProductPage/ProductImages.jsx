@@ -4,6 +4,11 @@ const ImageList = styled.ul`
   display: flex;
   gap: 40px;
   margin-top: 34px;
+
+  @media (max-width: 850px) {
+    margin-top: 12px;
+    margin-bottom: 24px;
+  }
 `;
 const ImageItem = styled.img`
   border-radius: 8px;
@@ -14,6 +19,10 @@ const ImageItem = styled.img`
 
   &:hover {
     border-color: ${(props) => (props.isActive ? '#007bff' : '#ccc')};
+  }
+
+  @media (max-width: 850px) {
+    width: 80px;
   }
 `;
 
