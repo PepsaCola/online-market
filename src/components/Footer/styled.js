@@ -21,6 +21,10 @@ export const Wrap = styled.div`
   flex-wrap: wrap;
   justify-content: space-between;
 
+  @media (max-width: 600px) {
+    padding: 30px 20px;
+  }
+
   @media (max-width: 450px) {
     padding: 0;
     flex-direction: column;

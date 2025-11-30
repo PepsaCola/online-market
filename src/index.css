@@ -10,4 +10,5 @@ ol {
 body {
   background: #f5f7fa;
   font-family: 'Montserrat', sans-serif;
+  overflow-x: hidden;
 }
