@@ -6,6 +6,12 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   gap: 60px;
+  @media (max-width: 990px) {
+    padding: 24px 60px;
+  }
+  @media (max-width: 700px) {
+    padding: 24px 20px;
+  }
 `;
 
 export const Filters = styled.div`

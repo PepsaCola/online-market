@@ -19,7 +19,7 @@ export const Products = () => {
       </EmptyWrapper>
     );
   }
-
+  console.log(wishlist);
   return (
     <ProductsContainer>
       <Header>
@@ -28,7 +28,7 @@ export const Products = () => {
       </Header>
       <ProductList>
         {wishlist.map((item) => (
-          <ProductItem key={item._id} product={item} />
+          <ProductItem key={item._id} product={item.item} />
         ))}
       </ProductList>
     </ProductsContainer>
