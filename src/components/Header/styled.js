@@ -126,6 +126,8 @@ export const MenuItem = styled(Link)`
   display: flex;
   gap: 20px;
   align-items: center;
+  text-decoration: none;
+  color: inherit;
 `;
 export const Overlay = styled.div`
   position: fixed;

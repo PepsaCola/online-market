@@ -8,6 +8,9 @@ export const Container = styled.div`
   flex-direction: column;
   gap: 60px;
   width: 100%;
+  @media (max-width: 990px) {
+    padding: 24px 20px;
+  }
 `;
 
 export const WishListBlock = styled.div`

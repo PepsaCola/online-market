@@ -3,15 +3,18 @@ import { useWishlist } from '../../../features/products/favorite';
 import { ProductItem } from '../../ProductItem/ProductItem';
 import {
   ProductsContainer,
-  Header,
+  ProductTable,
+  TableHead,
+  TableBody,
+  HeaderRow,
   HeaderText,
-  ProductList,
   EmptyWrapper,
   EmptyText,
 } from './styled';
 
 export const Products = () => {
   const { wishlist } = useWishlist();
+
   if (!wishlist || wishlist.length === 0) {
     return (
       <EmptyWrapper>
@@ -19,18 +22,24 @@ export const Products = () => {
       </EmptyWrapper>
     );
   }
-  console.log(wishlist);
+
   return (
     <ProductsContainer>
-      <Header>
-        <HeaderText className="product-header">Product</HeaderText>
-        <HeaderText className="price-header">Total Price</HeaderText>
-      </Header>
-      <ProductList>
-        {wishlist.map((item) => (
-          <ProductItem key={item._id} product={item.item} />
-        ))}
-      </ProductList>
+      <ProductTable>
+        <TableHead>
+          <HeaderRow>
+            <HeaderText>Product</HeaderText>
+            <HeaderText>Price</HeaderText>
+            <HeaderText></HeaderText>
+            <HeaderText></HeaderText>
+          </HeaderRow>
+        </TableHead>
+        <TableBody>
+          {wishlist.map((item) => (
+            <ProductItem key={item._id} product={item.item} />
+          ))}
+        </TableBody>
+      </ProductTable>
     </ProductsContainer>
   );
 };
