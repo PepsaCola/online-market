@@ -24,6 +24,10 @@ export const Form = styled.form`
   justify-content: center;
   padding: 120px 100px;
   gap: 20px;
+  @media (max-width: 990px) {
+    width: 100%;
+    padding: 20px 50px;
+  }
 `;
 export const BackGround = styled.div`
   width: 52%;
@@ -32,6 +36,9 @@ export const BackGround = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  @media (max-width: 990px) {
+    display: none;
+  }
 `;
 export const Description = styled.span`
   color: #b0cefc;
@@ -43,12 +50,18 @@ export const Title = styled.h1`
   color: #b0cefc;
   font-size: 48px;
   font-weight: 700;
+  @media (max-width: 990px) {
+    font-size: 20px;
+  }
 `;
 export const FormTitle = styled.h2`
   color: #2740b9;
   width: 100%;
   font-size: 48px;
   font-weight: 700;
+  @media (max-width: 990px) {
+    font-size: 25px;
+  }
 `;
 
 export const Label = styled.label`
@@ -70,6 +83,10 @@ export const Input = styled.input`
   border: none;
   box-sizing: border-box;
   padding: 10px 30px;
+  @media (max-width: 990px) {
+    font-size: 15px;
+    padding: 10px 15px;
+  }
 `;
 
 export const AccountBtn = styled.button`

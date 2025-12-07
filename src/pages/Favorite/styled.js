@@ -15,8 +15,8 @@ export const Container = styled.div`
 
 export const WishListBlock = styled.div`
   width: 100%;
-  left: 0px;
-  top: 0px;
+  left: 0;
+  top: 0;
   background: white;
   border-radius: 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);

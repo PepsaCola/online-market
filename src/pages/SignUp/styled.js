@@ -6,6 +6,10 @@ export const ContainerForLoginRoute = styled.div`
   align-items: center;
   justify-content: end;
   width: calc(100% - 31%);
+  @media (max-width: 990px) {
+    gap: 20px;
+    width: 100%;
+  }
 `;
 
 export const ForUserDescription = styled.span`
@@ -13,6 +17,9 @@ export const ForUserDescription = styled.span`
   font-size: 15px;
   font-weight: 300;
   align-self: flex-end;
+  @media (max-width: 990px) {
+    font-size: 12px;
+  }
 `;
 
 export const RouteToLogIn = styled(Link)`
@@ -23,5 +30,8 @@ export const RouteToLogIn = styled(Link)`
   cursor: pointer;
   &:hover {
     text-decoration: underline;
+  }
+  @media (max-width: 990px) {
+    font-size: 12px;
   }
 `;

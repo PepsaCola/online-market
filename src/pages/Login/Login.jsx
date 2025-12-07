@@ -16,6 +16,7 @@ import {
   Form,
 } from '../../components/AuthComponents/styled';
 import { ForgotKeyBtn, SignInBtn } from './styled';
+import { ContainerForLoginRoute, ForUserDescription, RouteToLogIn } from '../SignUp/styled';
 
 export const Login = () => {
   const dispatch = useDispatch();
@@ -74,6 +75,11 @@ export const Login = () => {
         <AccountBtn type="submit" disabled={loading}>
           {loading ? 'Logging in...' : 'Login In'}
         </AccountBtn>
+
+        <ContainerForLoginRoute>
+          <ForUserDescription>Dont have an account?</ForUserDescription>
+          <RouteToLogIn to="/sign-up">Register</RouteToLogIn>
+        </ContainerForLoginRoute>
 
         {error && <p style={{ color: 'red', marginTop: '10px' }}>{error}</p>}
       </Form>
