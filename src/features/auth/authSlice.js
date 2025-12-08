@@ -113,22 +113,29 @@ const authSlice = createSlice({
       })
       .addCase(addToFavorite.fulfilled, (state, action) => {
         if (!state.user.savedProducts) state.user.savedProducts = [];
-        const newProduct = action.payload.itemId;
-        state.user.savedProducts.push(newProduct);
+
+        const newProduct = action.payload.item;
+
+        const exists = state.user.savedProducts.find((p) => p._id === newProduct._id);
+        if (!exists) {
+          state.user.savedProducts.push({ item: newProduct });
+        }
       })
       .addCase(addToFavorite.rejected, (state, action) => {
-        console.error('ERROR:', action.payload);
         state.error = action.payload;
       })
+
       .addCase(removeFromFavorite.fulfilled, (state, action) => {
         if (!state.user.savedProducts) return;
 
-        const removedItem = action.payload.itemId;
-        const removedId = removedItem?._id || removedItem;
+        const idToRemove = action.payload.itemId;
 
         state.user.savedProducts = state.user.savedProducts.filter(
-          (item) => item._id !== removedId,
+          (product) => product.item._id !== idToRemove,
         );
+      })
+      .addCase(removeFromFavorite.rejected, (state, action) => {
+        state.error = action.payload;
       });
   },
 });

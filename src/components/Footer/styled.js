@@ -26,7 +26,7 @@ export const Wrap = styled.div`
   }
 
   @media (max-width: 450px) {
-    padding: 0;
+    padding: 20px;
     flex-direction: column;
   }
 `;
