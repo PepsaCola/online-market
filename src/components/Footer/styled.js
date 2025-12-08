@@ -8,10 +8,15 @@ export const Container = styled.div`
   width: 100%;
   padding: 24px 84px;
 
-  @media (max-width: 850px) {
-    padding: 24px 20px;
+  @media (max-width: 1024px) {
+    padding: 24px 40px;
+  }
+
+  @media (max-width: 600px) {
+    padding: 24px 16px;
   }
 `;
+
 export const Wrap = styled.div`
   width: 100%;
   background-color: #1f2937;
@@ -20,45 +25,84 @@ export const Wrap = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+  gap: 40px;
 
-  @media (max-width: 600px) {
+  @media (max-width: 1024px) {
+    padding: 40px 30px;
+    justify-content: center;
+  }
+
+  @media (max-width: 768px) {
+    flex-direction: column;
     padding: 30px 20px;
   }
-
-  @media (max-width: 450px) {
-    padding: 20px;
-    flex-direction: column;
-  }
 `;
+
 export const Title = styled.h2`
   color: white;
   font-size: 64px;
-  justify-self: left;
+  margin-bottom: 20px;
+  width: 100%;
 
-  @media (max-width: 450px) {
+  @media (max-width: 1024px) {
+    font-size: 48px;
+  }
+
+  @media (max-width: 600px) {
     font-size: 32px;
+    text-align: center;
   }
 `;
+
 export const List = styled.ul`
   display: flex;
   flex-direction: column;
   gap: 24px;
+
+  @media (max-width: 768px) {
+    align-items: center;
+    text-align: center;
+  }
 `;
+
 export const ListTitle = styled.h3`
   color: white;
   font-size: 24px;
   font-weight: 400;
   width: 100%;
+  margin-bottom: 10px;
+
+  @media (max-width: 768px) {
+    align-items: center;
+    text-align: center;
+  }
 `;
+
 export const ListItem = styled.li`
   color: white;
   font-size: 20px;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 600px) {
+    font-size: 16px;
+  }
 `;
+
 export const IconList = styled.ul`
   display: flex;
   flex-wrap: wrap;
   gap: 16px 24px;
   max-width: 124px;
+
+  @media (max-width: 768px) {
+    max-width: 100%;
+    justify-content: center;
+    margin-top: 20px;
+  }
 `;
 
 export const YouTubeIcon = styled(YouTube)`
@@ -79,18 +123,26 @@ export const Form = styled.form`
   display: flex;
   flex-wrap: wrap;
   gap: 24px;
+  align-items: flex-end;
 
-  @media (max-width: 450px) {
-    flex-wrap: nowrap;
-    max-width: 400px;
+  @media (max-width: 768px) {
     flex-direction: column;
+    align-items: stretch;
   }
 `;
+
 export const Label = styled.label`
   width: 100%;
   color: white;
   font-size: 24px;
+  margin-bottom: 8px;
+
+  @media (max-width: 600px) {
+    font-size: 18px;
+    text-align: center;
+  }
 `;
+
 export const Input = styled.input`
   outline: none;
   border: none;
@@ -99,11 +151,17 @@ export const Input = styled.input`
   color: #343434;
   font-size: 24px;
   padding: 16px 22px;
+  flex: 1;
+  min-width: 200px;
 
-  @media (max-width: 450px) {
-    padding: 8px;
+  @media (max-width: 600px) {
+    font-size: 16px;
+    padding: 12px;
+    width: 100%;
+    box-sizing: border-box;
   }
 `;
+
 export const Btn = styled.button`
   border: none;
   background-color: #4a6cf7;
@@ -112,4 +170,16 @@ export const Btn = styled.button`
   color: white;
   font-size: 20px;
   cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.2s;
+
+  &:hover {
+    background-color: #3a5bd9;
+  }
+
+  @media (max-width: 600px) {
+    width: 100%;
+    padding: 14px;
+    font-size: 18px;
+  }
 `;
