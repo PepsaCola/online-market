@@ -9,13 +9,33 @@ export const ShowcaseSection = styled.section`
   flex-direction: column;
   padding: 24px 84px;
   box-sizing: border-box;
+
+  @media (max-width: 1024px) {
+    padding: 20px 40px;
+  }
+
+  @media (max-width: 768px) {
+    padding: 10px 15px;
+    min-height: auto;
+  }
 `;
 
 export const CardsGrid = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   gap: 20px;
   z-index: 1;
+
+  @media (max-width: 768px) {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    width: 100%;
+    gap: 20px;
+    z-index: 1;
+    overflow-x: auto;
+  }
 `;
 
 export const ShowcaseBackground = styled.div`
@@ -37,4 +57,11 @@ export const SectionTitle = styled.h2`
   margin-bottom: 30px;
   z-index: 1;
   margin-top: 0;
+  text-align: left;
+
+  @media (max-width: 600px) {
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 20px;
+  }
 `;

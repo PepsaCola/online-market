@@ -8,6 +8,19 @@ export const Container = styled.div`
   flex-direction: column;
   gap: 60px;
   width: 100%;
+
+  @media (max-width: 1024px) {
+    width: 100%;
+    padding: 20px 40px;
+    gap: 40px;
+    overflow-x: hidden;
+  }
+
+  @media (max-width: 768px) {
+    width: 100%;
+    padding: 10px 15px;
+    gap: 30px;
+  }
 `;
 
 export const ProductGrid = styled.div`

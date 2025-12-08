@@ -10,6 +10,10 @@ export const NavContainer = styled.nav`
   margin-right: auto;
   box-sizing: border-box;
   position: relative;
+
+  @media (max-width: 768px) {
+    padding: 0 10px;
+  }
 `;
 
 export const NavItems = styled.div`
@@ -17,8 +21,22 @@ export const NavItems = styled.div`
   align-items: center;
   gap: 40px;
   border-bottom: 1px solid rgba(75, 71, 71, 0.68);
-  justify-content: space-between;
   width: 100%;
+  justify-content: space-between;
+
+  @media (max-width: 768px) {
+    justify-content: flex-start;
+    gap: 20px;
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
 `;
 
 export const NavItem = styled.span`
@@ -27,6 +45,7 @@ export const NavItem = styled.span`
   cursor: pointer;
   position: relative;
   padding: 20px 0;
+  flex-shrink: 0;
 
   color: ${({ active }) => (active ? '#2740b9' : '#333')};
   font-weight: ${({ active }) => (active ? '800' : '500')};
@@ -46,10 +65,25 @@ export const NavItem = styled.span`
     height: 2px;
     background-color: #2740b9;
   }
+
+  @media (max-width: 768px) {
+    font-size: 16px;
+    padding: 15px 0;
+  }
 `;
 
 export const ArrowRight = styled(ArrowRightIcon)`
   cursor: pointer;
   margin-left: 30px;
   margin-right: 0;
+
+  @media (max-width: 768px) {
+    margin-left: 15px;
+    width: 20px;
+    height: 20px;
+  }
+
+  @media (max-width: 480px) {
+    display: none;
+  }
 `;

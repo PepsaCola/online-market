@@ -23,20 +23,52 @@ export const Container = styled(Link)`
   &:hover {
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
   }
+
+  @media (max-width: 768px) {
+    padding: 80px 10px;
+  }
 `;
+
 export const Img = styled.img`
   width: 204px;
   height: 204px;
   align-self: center;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    height: auto;
+  }
 `;
+
 export const Name = styled.p`
   color: black;
   font-size: 24px;
+
+  @media (max-width: 768px) {
+    font-size: 18px;
+    word-break: break-all;
+  }
+
+  @media (max-width: 425px) {
+    font-size: 14px;
+    word-break: break-all;
+  }
 `;
+
 export const Price = styled.p`
   color: black;
   font-size: 20px;
+
+  @media (max-width: 768px) {
+    font-size: 18px;
+  }
+
+  @media (max-width: 425px) {
+    font-size: 14px;
+    word-break: break-all;
+  }
 `;
+
 export const LikeIconBack = styled.span`
   position: absolute;
   width: 52px;
@@ -53,6 +85,7 @@ export const LikeIconBack = styled.span`
     background-color: #ef4444;
   }
 `;
+
 export const LikeIcon = styled(Like)`
   width: 28px;
   height: 23px;
@@ -60,6 +93,7 @@ export const LikeIcon = styled(Like)`
     fill: white;
   }
 `;
+
 export const BasketIconBack = styled.span`
   position: absolute;
   right: 20px;
@@ -87,6 +121,7 @@ export const BasketIconBack = styled.span`
     }
   }
 `;
+
 export const BasketIcon = styled(Basket)`
   width: 27px;
   height: 26px;
@@ -94,6 +129,7 @@ export const BasketIcon = styled(Basket)`
     fill: #2740b9;
   }
 `;
+
 export const HoverIcon = styled(Plus)`
   width: 21px;
   height: 21px;
