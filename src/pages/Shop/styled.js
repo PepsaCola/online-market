@@ -18,6 +18,7 @@ export const Filters = styled.div`
   display: flex;
   justify-content: space-between;
 `;
+
 export const FilterWrap = styled.div`
   display: flex;
   gap: 30px;
@@ -25,10 +26,19 @@ export const FilterWrap = styled.div`
 
 export const Content = styled.div`
   width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
   display: flex;
   flex-wrap: wrap;
-  max-width: 1280px;
   gap: 26px;
-  margin: 0 auto;
-  justify-content: center;
+
+  @media (max-width: 1024px) {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    max-width: 1280px;
+    gap: 26px;
+    margin: 0 auto;
+  }
 `;

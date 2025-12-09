@@ -3,7 +3,6 @@ import styled from 'styled-components';
 export const ProductsContainer = styled.div`
   width: 100%;
   margin: 0 auto;
-  overflow: hidden;
 `;
 
 export const EmptyWrapper = styled.div`
@@ -20,15 +19,28 @@ export const EmptyText = styled.p`
   color: #888888;
   margin: 0;
 `;
+
 export const ProductTable = styled.table`
   width: 100%;
   border-collapse: collapse;
   margin-bottom: 24px;
+
+  @media (max-width: 600px) {
+    display: block;
+  }
 `;
 
-export const TableHead = styled.thead``;
+export const TableHead = styled.thead`
+  @media (max-width: 600px) {
+    display: none;
+  }
+`;
 
-export const TableBody = styled.tbody``;
+export const TableBody = styled.tbody`
+  @media (max-width: 600px) {
+    display: block;
+  }
+`;
 
 export const HeaderRow = styled.tr`
   border-bottom: 1px solid #eee;

@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
+  box-sizing: border-box;
   padding: 24px 84px;
   margin: 0 auto;
   padding-top: 0;
@@ -10,14 +11,12 @@ export const Container = styled.div`
   width: 100%;
 
   @media (max-width: 1024px) {
-    width: 100%;
     padding: 20px 40px;
     gap: 40px;
     overflow-x: hidden;
   }
 
   @media (max-width: 768px) {
-    width: 100%;
     padding: 10px 15px;
     gap: 30px;
   }

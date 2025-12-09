@@ -24,8 +24,10 @@ export const Container = styled(Link)`
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
   }
 
-  @media (max-width: 768px) {
-    padding: 80px 10px;
+  @media (max-width: 1024px) {
+    padding: 30px 10px 80px 10px;
+    width: 100%;
+    height: auto;
   }
 `;
 
@@ -35,8 +37,9 @@ export const Img = styled.img`
   align-self: center;
 
   @media (max-width: 768px) {
-    width: 100%;
-    height: auto;
+    width: 140px;
+    height: 140px;
+    margin-bottom: 10px;
   }
 `;
 

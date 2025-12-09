@@ -22,19 +22,22 @@ export const ShowcaseSection = styled.section`
 
 export const CardsGrid = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: space-between;
   gap: 20px;
   z-index: 1;
 
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     flex-wrap: nowrap;
     width: 100%;
     gap: 20px;
     z-index: 1;
     overflow-x: auto;
+    align-items: stretch;
+    max-width: 1280px;
+    margin: 0 auto;
   }
 `;
 
