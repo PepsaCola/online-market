@@ -36,7 +36,7 @@ export const Img = styled.img`
   height: 204px;
   align-self: center;
 
-  @media (max-width: 768px) {
+  @media (max-width: 1440px) {
     width: 140px;
     height: 140px;
     margin-bottom: 10px;

@@ -1,14 +1,14 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  box-sizing: border-box;
-  padding: 24px 84px;
-  margin: 0 auto;
-  padding-top: 0;
+  width: 100%;
   display: flex;
   flex-direction: column;
+  margin: 0 auto;
   gap: 60px;
-  width: 100%;
+  padding: 24px 84px;
+  box-sizing: border-box;
+  overflow-x: hidden;
 
   @media (max-width: 1024px) {
     padding: 20px 40px;

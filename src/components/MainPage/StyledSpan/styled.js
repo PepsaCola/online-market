@@ -24,7 +24,7 @@ export const NavItems = styled.div`
   width: 100%;
   justify-content: space-between;
 
-  @media (max-width: 1024px) {
+  @media (max-width: 1600px) {
     justify-content: flex-start;
     gap: 20px;
     overflow-x: auto;
