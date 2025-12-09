@@ -13,36 +13,32 @@ export const TableCell = styled.td`
   padding: 24px 0;
   vertical-align: middle;
 
-  /* Перша колонка (Інфо) */
   &:first-child {
     padding-left: 32px;
     width: 50%;
   }
 
-  /* Третя колонка (Кнопка на десктопі) */
   &:nth-child(3) {
-    /* Приховуємо всю колонку на мобільному */
     @media (max-width: 990px) {
       display: none;
     }
   }
 
-  /* Остання колонка (Хрестик + Мобільна кнопка) */
   &:last-child {
     padding-right: 32px;
     text-align: right;
   }
 
   @media (max-width: 990px) {
-    padding: 16px 0; /* Трохи зменшив паддінги для мобільного */
+    padding: 16px 0;
 
     &:first-child {
       padding-left: 16px;
     }
 
     &:last-child {
+      padding-left: 16px;
       padding-right: 16px;
-      /* Важливо для вирівнювання іконки та кнопки стовпчиком */
       display: flex;
       flex-direction: column;
       align-items: flex-end;
@@ -51,9 +47,6 @@ export const TableCell = styled.td`
   }
 `;
 
-// --- Внутрішні елементи рядка ---
-
-// ProductDetails залишається div, щоб картинка і текст були flex-рядком всередині клітинки
 export const ProductDetails = styled.div`
   display: flex;
   align-items: center;
@@ -83,6 +76,7 @@ export const ProductName = styled.span`
   margin-bottom: 0.25rem;
   @media (max-width: 990px) {
     font-size: 12px;
+    padding: 16px;
   }
 `;
 
@@ -119,6 +113,7 @@ export const ActionButton = styled(BaseButton)`
     background-color: #3a52b2;
   }
 `;
+
 export const MobileActionButton = styled(ActionButton)`
   display: none;
   margin-top: 10px;
@@ -126,8 +121,9 @@ export const MobileActionButton = styled(ActionButton)`
     display: inline-block;
   }
 `;
+
 export const RemoveIcon = styled(Remove)`
   cursor: pointer;
   display: block;
-  margin-left: auto; /* Щоб іконка була притиснута вправо, якщо потрібно */
+  margin-left: auto;
 `;
