@@ -17,6 +17,10 @@ export const InformationTitle = styled.h1`
   color: #333;
   padding: 20px;
   text-align: center;
+
+  @media (max-width: 425px) {
+    font-size: 21px;
+  }
 `;
 
 export const EditInfo = styled.div`
@@ -32,6 +36,10 @@ export const Photo = styled.div`
   border-radius: 50%;
   padding: 30px;
   background: #fff;
+
+  @media (max-width: 425px) {
+    display: none;
+  }
 `;
 
 export const CameraIcon = styled(Camera)`
@@ -48,26 +56,35 @@ export const Buttons = styled.div`
   justify-content: center;
   align-items: center;
   height: 100%;
-`;
-export const EditButton = styled.button`
-  width: 160px;
-  height: 60px;
-  border-radius: 8px;
-  background: #4a6cf7;
-  color: #fff;
-  font-size: 20px;
-  border: none;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 0;
-  margin-bottom: 10px;
-  transition: background-color 0.2s ease-in-out;
+  width: 25%;
+
+  @media (max-width: 1024px) {
+    width: 50%;
+  }
+
+  @media (max-width: 800px) {
+    width: 50%;
+  }
+
+  @media (max-width: 640px) {
+    width: 60%;
+  }
+
+  @media (max-width: 550px) {
+    width: 70%;
+  }
+
+  @media (max-width: 500px) {
+    width: 50%;
+  }
+
+  @media (max-width: 425px) {
+    width: 100%;
+  }
 `;
 
 export const DeleteButton = styled.button`
-  width: 160px;
+  width: 100%;
   height: 60px;
   border-radius: 8px;
   background: #ef4444;
@@ -80,6 +97,10 @@ export const DeleteButton = styled.button`
   align-items: center;
   padding: 0;
   transition: background-color 0.2s ease-in-out;
+
+  &:hover {
+    background-color: #dc2626;
+  }
 `;
 
 export const Label = styled.label`
@@ -88,6 +109,12 @@ export const Label = styled.label`
   flex-direction: column;
   padding: 16px;
   gap: 16px;
+  box-sizing: border-box;
+
+  @media (max-width: 1024px) {
+    gap: 8px;
+    padding: 16px 0 16px 0;
+  }
 `;
 
 export const Input = styled.input`
@@ -95,29 +122,48 @@ export const Input = styled.input`
   background: white;
   border-radius: 11px;
   color: black;
-  font-size: 24px;
-  font-weight: 400;
   outline: none;
   border: none;
   box-sizing: border-box;
+  font-size: 24px;
   padding: 16px 36px;
+  font-weight: 400;
+
+  @media (max-width: 768px) {
+    font-size: 16px;
+    padding: 14px 20px;
+    border-radius: 8px;
+  }
 `;
 
 export const SignUpInfo = styled.div`
   display: flex;
   flex-direction: row;
+
+  @media (max-width: 1024px) {
+    display: flex;
+    flex-direction: column;
+  }
 `;
 
 export const LeftInfo = styled.div`
   display: flex;
   flex-direction: column;
   width: 50%;
+
+  @media (max-width: 1024px) {
+    width: 100%;
+  }
 `;
 
 export const RightInfo = styled.div`
   display: flex;
   flex-direction: column;
   width: 50%;
+
+  @media (max-width: 1024px) {
+    width: 100%;
+  }
 `;
 
 export const OrderContainer = styled.div`

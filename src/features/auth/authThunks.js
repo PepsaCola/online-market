@@ -32,12 +32,14 @@ export const login = createAsyncThunk('auth/login', async (credentials, { reject
 
 export const logout = createAsyncThunk('auth/logout', async (_, { rejectWithValue }) => {
   try {
-    localStorage.removeItem('accessToken');
+    localStorage.clear();
     clearAuthHeader();
+    return true;
   } catch (error) {
     return rejectWithValue('Помилка виходу');
   }
 });
+
 export const fetchCurrentUser = createAsyncThunk('auth/refresh', async (_, { rejectWithValue }) => {
   const token = localStorage.getItem('accessToken');
   if (!token) {

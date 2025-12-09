@@ -6,7 +6,6 @@ import {
   Photo,
   CameraIcon,
   Buttons,
-  EditButton,
   DeleteButton,
   SignUpInfo,
   LeftInfo,
@@ -27,17 +26,30 @@ import {
 } from './styled';
 
 import { getUserData } from '../../api/cartApi';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { getToken } from '../../features/auth/selectors';
 import { useNavigate } from 'react-router-dom';
+import { logout } from '../../features/auth/authThunks';
 
 export const User = () => {
   const [orders, setOrders] = useState([]);
   const [userData, setUserData] = useState(null);
   const [localMeta, setLocalMeta] = useState({});
   const token = useSelector(getToken);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const { items: allProducts } = useSelector((state) => state.products);
+
+  const handleLogout = () => {
+    dispatch(logout())
+      .unwrap()
+      .then(() => {
+        navigate('/login', { replace: true });
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -91,8 +103,7 @@ export const User = () => {
             <CameraIcon />
           </Photo>
           <Buttons>
-            <EditButton>Edit</EditButton>
-            <DeleteButton>Delete</DeleteButton>
+            <DeleteButton onClick={handleLogout}>Log out</DeleteButton>
           </Buttons>
         </EditInfo>
 
@@ -100,21 +111,21 @@ export const User = () => {
           <LeftInfo>
             <Label>
               First Name
-              <Input placeholder={userData?.username || 'User'} readOnly />
+              <Input placeholder={userData?.username || 'User'} />
             </Label>
             <Label>
               Email
-              <Input placeholder={userData?.email || 'email@example.com'} readOnly />
+              <Input placeholder={userData?.email || 'email@example.com'} />
             </Label>
           </LeftInfo>
           <RightInfo>
             <Label>
               Last Name
-              <Input placeholder={'Smith'} readOnly />
+              <Input placeholder={'Smith'} />
             </Label>
             <Label>
               Phone Number
-              <Input placeholder={'+38 (050) ...'} readOnly />
+              <Input placeholder={'+38 (050) ...'} />
             </Label>
           </RightInfo>
         </SignUpInfo>
