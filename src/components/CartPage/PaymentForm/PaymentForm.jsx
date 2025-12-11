@@ -1,49 +1,60 @@
+import React from 'react';
 import { useForm } from 'react-hook-form';
-import { buyAllProducts } from '../../../api/cartApi';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { buyAllThunk } from '../../../features/auth/bucketThunks';
+import { getCarts } from '../../../features/auth/selectors';
+
 import {
   PaymentContainer,
   Title,
   PaymentFormContainer,
   FormRow,
 } from '../../../pages/CartPage/styled';
-import { useSelector } from 'react-redux';
-import { getCarts } from '../../../features/auth/selectors';
 
 const PaymentForm = () => {
   const cart = useSelector(getCarts);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm();
 
   const onSubmit = async (data) => {
-    if (cart.length === 0) {
+    if (!cart || cart.length === 0) {
       toast.error('Cart is empty');
       return;
     }
 
+    const cartSnapshot = {};
+    const optionsSnapshot = {};
+
+    cart.forEach((item) => {
+      const itemId = item._id || item.item?._id;
+      if (itemId) {
+        cartSnapshot[itemId] = item.qty;
+        optionsSnapshot[itemId] = item.selectedOptions || {};
+      }
+    });
+
     try {
-      const cartSnapshot = {};
-      const optionsSnapshot = {};
+      const resultAction = await dispatch(buyAllThunk());
+      const response = await resultAction.payload;
 
-      cart.forEach((item) => {
-        cartSnapshot[item._id] = item.qty;
-        optionsSnapshot[item._id] = item.selectedOptions || {};
-      });
+      if (buyAllThunk.rejected.match(resultAction)) {
+        throw new Error(response || 'Payment failed');
+      }
 
-      const response = await buyAllProducts();
-
-      const createdOrder = response.data.order;
+      const createdOrder = response.order;
       const orderKey = createdOrder.addedAt;
 
       if (orderKey) {
         const existingData = JSON.parse(localStorage.getItem('orders_meta') || '{}');
-
         existingData[orderKey] = {
           customer: {
             name: data.name,
@@ -56,16 +67,14 @@ const PaymentForm = () => {
           quantities: cartSnapshot,
           options: optionsSnapshot,
         };
-
         localStorage.setItem('orders_meta', JSON.stringify(existingData));
       }
 
-      // clearLocalCart();
       toast.success('Order successfully created!');
       navigate('/user');
     } catch (error) {
       console.error(error);
-      toast.error(error.response?.data?.message || 'Payment failed');
+      toast.error(error.message || 'Something went wrong');
     }
   };
 
@@ -77,7 +86,6 @@ const PaymentForm = () => {
           <label>Full Name</label>
           <input
             type="text"
-            id="name"
             placeholder="Taras Shevchenko"
             {...register('name', {
               required: 'Please enter your name',
@@ -89,37 +97,35 @@ const PaymentForm = () => {
           />
           {errors.name && <p style={{ color: 'red' }}>{errors.name.message}</p>}
         </fieldset>
+
         <fieldset>
           <label>Phone Number</label>
           <input
             type="tel"
             placeholder="+380997777777"
             {...register('phone', {
-              required: true,
+              required: 'Phone is required',
               pattern: {
                 value: /^\+380\d{9}$/,
-                message: 'Please enter a valid phone number',
+                message: 'Format: +380xxxxxxxxx',
               },
             })}
           />
           {errors.phone && <p style={{ color: 'red' }}>{errors.phone.message}</p>}
         </fieldset>
+
         <fieldset>
           <label>City</label>
           <input
             type="text"
-            id="city"
             placeholder="Kyiv"
             {...register('city', {
-              required: 'Please enter a city',
-              pattern: {
-                value: /^[A-Za-zА-Яа-яІіЇїЄє\s'-]+$/,
-                message: 'City can only contain letters',
-              },
+              required: 'City is required',
             })}
           />
           {errors.city && <p style={{ color: 'red' }}>{errors.city.message}</p>}
         </fieldset>
+
         <fieldset>
           <label>Shipping Address</label>
           <FormRow>
@@ -127,49 +133,45 @@ const PaymentForm = () => {
               <label>Street</label>
               <input
                 type="text"
-                id="street"
                 placeholder="Politehnichna"
                 {...register('street', {
-                  required: 'Please enter a street',
-                  pattern: {
-                    value: /^[A-Za-zА-Яа-яІіЇїЄє\s'-]+$/,
-                    message: 'Street can only contain letters',
-                  },
+                  required: 'Street is required',
                 })}
               />
-
               {errors.street && <p style={{ color: 'red' }}>{errors.street.message}</p>}
             </div>
 
             <div>
               <label>House Number</label>
               <input
-                type="number"
-                id="house_num"
+                type="text"
                 placeholder="216"
                 {...register('houseNum', {
-                  required: 'Please enter a number',
+                  required: 'Required',
                 })}
               />
               {errors.houseNum && <p style={{ color: 'red' }}>{errors.houseNum.message}</p>}
             </div>
           </FormRow>
         </fieldset>
+
         <fieldset>
           <label>Payment Card</label>
           <input
             type="text"
-            id="card"
             placeholder="4441777777777777"
             {...register('card', {
-              required: 'Please enter your card number',
-              minLength: { value: 16, message: 'Please enter a valid 16-digit card number' },
-              maxLength: { value: 16, message: 'Please enter a valid 16-digit card number' },
+              required: 'Card number is required',
+              minLength: { value: 16, message: 'Must be 16 digits' },
+              maxLength: { value: 16, message: 'Must be 16 digits' },
             })}
           />
           {errors.card && <p style={{ color: 'red' }}>{errors.card.message}</p>}
         </fieldset>
-        <button type="submit">Check Out</button>
+
+        <button type="submit" disabled={isSubmitting}>
+          {isSubmitting ? 'Processing...' : 'Check Out'}
+        </button>
       </PaymentFormContainer>
     </PaymentContainer>
   );

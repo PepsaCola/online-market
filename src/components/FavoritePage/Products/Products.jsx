@@ -1,16 +1,7 @@
 import React from 'react';
 import { useWishlist } from '../../../features/products/favorite';
 import { ProductItem } from '../../ProductItem/ProductItem';
-import {
-  ProductsContainer,
-  ProductTable,
-  TableHead,
-  TableBody,
-  HeaderRow,
-  HeaderText,
-  EmptyWrapper,
-  EmptyText,
-} from './styled';
+import { ProductsContainer, ListWrapper, EmptyWrapper, EmptyText } from './styled';
 
 export const Products = () => {
   const { wishlist } = useWishlist();
@@ -25,21 +16,11 @@ export const Products = () => {
 
   return (
     <ProductsContainer>
-      <ProductTable>
-        <TableHead>
-          <HeaderRow>
-            <HeaderText>Product</HeaderText>
-            <HeaderText>Price</HeaderText>
-            <HeaderText></HeaderText>
-            <HeaderText></HeaderText>
-          </HeaderRow>
-        </TableHead>
-        <TableBody>
-          {wishlist.map((item) => (
-            <ProductItem key={item._id} product={item.item} />
-          ))}
-        </TableBody>
-      </ProductTable>
+      <ListWrapper>
+        {wishlist.map((item) => (
+          <ProductItem key={item._id} product={item.item} />
+        ))}
+      </ListWrapper>
     </ProductsContainer>
   );
 };

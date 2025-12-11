@@ -4,38 +4,43 @@ import { ReactComponent as Camera } from '../../img/camera.svg';
 export const Container = styled.div`
   padding: 24px 84px;
   margin: 0 auto;
-  padding-top: 0;
+  max-width: 1400px;
   display: flex;
   flex-direction: column;
   gap: 20px;
-  width: auto;
+
+  @media (max-width: 1024px) {
+    padding: 24px 20px;
+  }
 `;
 
 export const InformationTitle = styled.h1`
   font-size: 32px;
   font-weight: bold;
   color: #333;
-  padding: 20px;
-  text-align: center;
+  padding: 20px 0;
+  border-bottom: 2px solid #f3f4f6;
+  margin-bottom: 10px;
 
   @media (max-width: 425px) {
-    font-size: 21px;
+    font-size: 24px;
   }
 `;
 
 export const EditInfo = styled.div`
   display: flex;
-  flex-direction: row;
   justify-content: space-between;
-  height: 120px;
+  align-items: center;
+  margin-bottom: 20px;
 `;
 
 export const Photo = styled.div`
-  width: 120px;
-  height: 100%;
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
-  padding: 30px;
-  background: #fff;
+  padding: 20px;
+  background: #f9f9f9;
+  border: 1px solid #eee;
 
   @media (max-width: 425px) {
     display: none;
@@ -45,39 +50,13 @@ export const Photo = styled.div`
 export const CameraIcon = styled(Camera)`
   width: 100%;
   height: 100%;
-  & path {
-    fill: black;
+  path {
+    fill: #333;
   }
 `;
 
 export const Buttons = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  width: 25%;
-
-  @media (max-width: 1024px) {
-    width: 50%;
-  }
-
-  @media (max-width: 800px) {
-    width: 50%;
-  }
-
-  @media (max-width: 640px) {
-    width: 60%;
-  }
-
-  @media (max-width: 550px) {
-    width: 70%;
-  }
-
-  @media (max-width: 500px) {
-    width: 50%;
-  }
-
+  width: 200px;
   @media (max-width: 425px) {
     width: 100%;
   }
@@ -85,209 +64,221 @@ export const Buttons = styled.div`
 
 export const DeleteButton = styled.button`
   width: 100%;
-  height: 60px;
+  padding: 12px;
   border-radius: 8px;
   background: #ef4444;
   color: #fff;
-  font-size: 20px;
+  font-size: 16px;
+  font-weight: 600;
   border: none;
   cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 0;
-  transition: background-color 0.2s ease-in-out;
-
+  transition: background-color 0.2s;
   &:hover {
     background-color: #dc2626;
   }
 `;
 
+export const SignUpInfo = styled.div`
+  display: flex;
+  gap: 20px;
+  margin-bottom: 40px;
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 0;
+  }
+`;
+
+export const LeftInfo = styled.div`
+  flex: 1;
+`;
+export const RightInfo = styled.div`
+  flex: 1;
+`;
+
 export const Label = styled.label`
-  width: 100%;
   display: flex;
   flex-direction: column;
-  padding: 16px;
-  gap: 16px;
-  box-sizing: border-box;
-
-  @media (max-width: 1024px) {
-    gap: 8px;
-    padding: 16px 0 16px 0;
-  }
+  gap: 8px;
+  margin-bottom: 16px;
+  font-size: 14px;
+  color: #555;
+  font-weight: 500;
 `;
 
 export const Input = styled.input`
   width: 100%;
   background: white;
-  border-radius: 11px;
-  color: black;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  color: #333;
+  font-size: 16px;
+  padding: 12px 16px;
   outline: none;
-  border: none;
-  box-sizing: border-box;
-  font-size: 24px;
-  padding: 16px 36px;
-  font-weight: 400;
-
-  @media (max-width: 768px) {
-    font-size: 16px;
-    padding: 14px 20px;
-    border-radius: 8px;
+  &:focus {
+    border-color: #3b82f6;
   }
 `;
 
-export const SignUpInfo = styled.div`
+export const OrderBlock = styled.div`
   display: flex;
-  flex-direction: row;
+  gap: 30px;
+  align-items: flex-start;
+  padding-bottom: 40px;
+  border-bottom: 1px solid #e5e7eb;
 
-  @media (max-width: 1024px) {
-    display: flex;
+  &:last-child {
+    border-bottom: none;
+  }
+
+  @media (max-width: 960px) {
     flex-direction: column;
   }
 `;
 
-export const LeftInfo = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 50%;
-
-  @media (max-width: 1024px) {
-    width: 100%;
-  }
-`;
-
-export const RightInfo = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 50%;
-
-  @media (max-width: 1024px) {
-    width: 100%;
-  }
-`;
-
-export const OrderContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  gap: 40px;
-  width: 100%;
-  padding: 30px;
-  border-radius: 12px;
-  background: #ffffff;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  border: 1px solid #f3f4f6;
-`;
-
-export const OrderLeft = styled.div`
+export const OrderTableArea = styled.div`
   flex: 1;
-  display: flex;
-  flex-direction: column;
+  width: 100%;
 `;
 
-export const OrderRight = styled.div`
-  width: 400px;
+export const OrderSummaryArea = styled.div`
+  width: 350px;
   flex-shrink: 0;
-`;
 
-export const OrderHeader = styled.div`
-  display: grid;
-  grid-template-columns: 3fr 1fr 1fr;
-  margin-bottom: 20px;
-  span {
-    color: #6b7280;
-    font-size: 12px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+  @media (max-width: 960px) {
+    width: 100%;
   }
 `;
 
-export const ProductRow = styled.div`
-  display: grid;
-  grid-template-columns: 3fr 1fr 1fr;
-  align-items: center;
-  margin-bottom: 24px;
-  padding-bottom: 24px;
+export const TableWrapper = styled.div`
+  width: 100%;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  overflow: hidden;
+  overflow-x: auto;
+`;
+
+export const StyledTable = styled.table`
+  width: 100%;
+  border-collapse: collapse; /* Важливо для таблиць */
+  background: white;
+`;
+
+export const TableHead = styled.thead`
+  background-color: #f9fafb;
+`;
+
+export const TableBody = styled.tbody``;
+
+export const TableRow = styled.tr`
+  border-bottom: 1px solid #f3f4f6;
 
   &:last-child {
     border-bottom: none;
-    margin-bottom: 0;
-    padding-bottom: 0;
   }
+`;
 
-  .qty {
-    font-size: 16px;
-    color: #333;
-  }
+export const TableHeader = styled.th`
+  padding: 16px 24px;
+  text-align: left;
+  font-size: 13px;
+  font-weight: 600;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+`;
 
-  .price {
-    font-size: 16px;
-    font-weight: 600;
-    color: #333;
-  }
+export const TableCell = styled.td`
+  padding: 20px 24px;
+  vertical-align: middle;
+  color: #333;
+  font-size: 16px;
 `;
 
 export const ProductInfoBox = styled.div`
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 16px;
 
-  h4 {
-    margin: 0;
-    font-size: 16px;
-    font-weight: 400;
-    color: #111;
+  .info-text {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    h4 {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 600;
+      color: #111;
+    }
+
+    span {
+      font-size: 13px;
+      color: #6b7280;
+    }
   }
 `;
 
 export const ProductImage = styled.img`
-  width: 60px;
-  height: 60px;
-  object-fit: contain;
-  border-radius: 4px;
-  background-color: #3b82f6;
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+  border-radius: 8px;
+  background-color: #f3f4f6;
+  border: 1px solid #eee;
 `;
 
 export const SummaryCard = styled.div`
   background-color: #f9fafb;
-  border-radius: 16px;
-  padding: 32px;
+  border-radius: 12px;
+  padding: 24px;
+  border: 1px solid #e5e7eb;
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 20px;
 `;
 
 export const SummaryHeader = styled.h2`
-  font-size: 24px;
-  font-weight: 800;
+  font-size: 18px;
+  font-weight: 700;
   margin: 0;
-  margin-bottom: 5px;
-  color: #000;
+  color: #111;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .date {
+    font-size: 14px;
+    font-weight: 400;
+    color: #6b7280;
+  }
 `;
 
 export const SummaryRow = styled.div`
   display: flex;
   justify-content: space-between;
-  gap: 20px;
+  gap: 16px;
 
   div {
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 4px;
     flex: 1;
   }
 
   span {
     color: #6b7280;
-    font-size: 14px;
+    font-size: 12px;
+    text-transform: uppercase;
+    font-weight: 600;
   }
 
   p {
     margin: 0;
-    font-weight: 600;
-    font-size: 15px;
+    font-weight: 500;
+    font-size: 14px;
     color: #111;
+    word-break: break-word;
   }
 `;
 
@@ -295,7 +286,7 @@ export const TotalRow = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 10px;
+  margin-top: 8px;
   padding-top: 20px;
   border-top: 1px solid #e5e7eb;
 
@@ -310,11 +301,4 @@ export const TotalRow = styled.div`
     font-weight: 800;
     color: #111;
   }
-`;
-
-export const OrdersList = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 30px; /* Відступ між різними замовленнями */
-  width: 100%;
 `;

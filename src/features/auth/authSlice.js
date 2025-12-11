@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { register, login, logout, fetchCurrentUser } from './authThunks';
-import { addBucketThunk, deleteBucketThunk } from './bucketThunks';
+import { addBucketThunk, buyAllThunk, deleteBucketThunk } from './bucketThunks';
 import { addToFavorite, removeFromFavorite } from './favoriteThunks';
 
 const initialState = {
@@ -9,6 +9,7 @@ const initialState = {
     email: null,
     bucketProducts: [],
     savedProducts: [],
+    ordersHistory: [],
     reviews: [],
     _id: null,
   },
@@ -29,6 +30,7 @@ const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+
       .addCase(register.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -108,6 +110,25 @@ const authSlice = createSlice({
         state.user.bucketProducts = action.payload.bucketProducts;
       })
       .addCase(deleteBucketThunk.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(buyAllThunk.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(buyAllThunk.fulfilled, (state, action) => {
+        state.loading = false;
+
+        state.user.bucketProducts = [];
+
+        if (state.user.ordersHistory) {
+          state.user.ordersHistory.push(action.payload.order);
+        } else {
+          state.user.ordersHistory = [action.payload.order];
+        }
+      })
+      .addCase(buyAllThunk.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })

@@ -1,129 +1,155 @@
 import styled from 'styled-components';
 import { ReactComponent as Remove } from '../../img/close.svg';
 
-export const ItemRow = styled.tr`
-  border-bottom: 1px solid #eee;
-
-  &:last-child {
-    border-bottom: none;
-  }
-`;
-
-export const TableCell = styled.td`
-  padding: 24px 0;
-  vertical-align: middle;
-
-  &:first-child {
-    padding-left: 32px;
-    width: 50%;
-  }
-
-  &:nth-child(3) {
-    @media (max-width: 990px) {
-      display: none;
-    }
-  }
-
-  &:last-child {
-    padding-right: 32px;
-    text-align: right;
-  }
-
-  @media (max-width: 990px) {
-    padding: 16px 0;
-
-    &:first-child {
-      padding-left: 16px;
-    }
-
-    &:last-child {
-      padding-left: 16px;
-      padding-right: 16px;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      justify-content: center;
-    }
-  }
-`;
-
-export const ProductDetails = styled.div`
+export const Card = styled.div`
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px;
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  transition:
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
+
+  &:hover {
+    border-color: #b0b0b0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  }
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 16px;
+    gap: 16px;
+    position: relative;
+  }
+`;
+
+export const InfoGroup = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex: 1;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    gap: 12px;
+  }
+`;
+
+export const ImageWrapper = styled.div`
+  width: 80px;
+  height: 80px;
+  flex-shrink: 0;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+
+  @media (max-width: 768px) {
+    width: 60px;
+    height: 60px;
+  }
 `;
 
 export const ProductImage = styled.img`
-  width: 60px;
-  height: 60px;
+  width: 100%;
+  height: 100%;
   object-fit: contain;
-  border-radius: 8px;
-  margin-right: 1.5rem;
-  @media (max-width: 990px) {
-    width: 40px;
-    height: 40px;
-  }
 `;
 
-export const ProductInfo = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-export const ProductName = styled.span`
+export const ProductTitle = styled.h3`
   font-size: 16px;
   font-weight: 600;
   color: #333;
-  margin-bottom: 0.25rem;
-  @media (max-width: 990px) {
-    font-size: 12px;
-    padding: 16px;
+  margin: 0;
+  line-height: 1.4;
+
+  @media (max-width: 768px) {
+    font-size: 14px;
+    padding-right: 20px;
+  }
+`;
+
+export const ActionsGroup = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 24px;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    justify-content: space-between;
+    gap: 12px;
+    padding-top: 12px;
+    border-top: 1px solid #f0f0f0;
   }
 `;
 
 export const Price = styled.span`
-  font-size: 16px;
-  font-weight: 600;
+  font-size: 18px;
+  font-weight: 700;
   color: #333;
-  @media (max-width: 990px) {
-    font-size: 12px;
+  white-space: nowrap;
+
+  @media (max-width: 768px) {
+    font-size: 16px;
   }
 `;
 
-export const BaseButton = styled.button`
-  padding: 12px 20px;
-  font-size: 14px;
-  font-weight: 600;
-  border-radius: 8px;
-  cursor: pointer;
-  border: 1px solid transparent;
-  text-align: center;
-  transition: all 0.2s ease;
-  @media (max-width: 990px) {
-    padding: 6px 10px;
-    font-size: 12px;
-  }
-`;
-
-export const ActionButton = styled(BaseButton)`
+export const AddToCartBtn = styled.button`
   background-color: #4a69e2;
   color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
   white-space: nowrap;
 
   &:hover {
     background-color: #3a52b2;
   }
-`;
 
-export const MobileActionButton = styled(ActionButton)`
-  display: none;
-  margin-top: 10px;
-  @media (max-width: 990px) {
-    display: inline-block;
+  @media (max-width: 768px) {
+    flex: 1;
+    padding: 12px;
   }
 `;
 
-export const RemoveIcon = styled(Remove)`
+export const RemoveBtn = styled.button`
+  background: none;
+  border: none;
   cursor: pointer;
-  display: block;
-  margin-left: auto;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #888;
+  transition: color 0.2s;
+
+  &:hover {
+    color: #ff4d4f;
+  }
+
+  @media (max-width: 768px) {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    padding: 4px;
+  }
+`;
+
+export const RemoveIconStyled = styled(Remove)`
+  width: 20px;
+  height: 20px;
+
+  path {
+    fill: currentColor;
+  }
 `;

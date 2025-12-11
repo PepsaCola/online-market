@@ -23,3 +23,11 @@ export const deleteBucketThunk = createAsyncThunk(
     }
   },
 );
+export const buyAllThunk = createAsyncThunk('bucket/buyAll', async (_, { rejectWithValue }) => {
+  try {
+    const response = await axiosInstance.put('/buy/all');
+    return response.data;
+  } catch (error) {
+    return rejectWithValue(error.response?.data?.message || 'Purchase failed');
+  }
+});

@@ -12,11 +12,16 @@ import {
   RightInfo,
   Input,
   Label,
-  OrderContainer,
-  OrderLeft,
-  OrderRight,
-  OrderHeader,
-  ProductRow,
+  OrderBlock,
+  OrderTableArea,
+  OrderSummaryArea,
+  TableWrapper,
+  StyledTable,
+  TableHead,
+  TableBody,
+  TableRow,
+  TableHeader,
+  TableCell,
   ProductImage,
   ProductInfoBox,
   SummaryCard,
@@ -25,20 +30,21 @@ import {
   TotalRow,
 } from './styled';
 
-import { getUserData } from '../../api/cartApi';
 import { useSelector, useDispatch } from 'react-redux';
 import { getToken } from '../../features/auth/selectors';
+import { fetchCurrentUser, logout } from '../../features/auth/authThunks';
 import { useNavigate } from 'react-router-dom';
-import { logout } from '../../features/auth/authThunks';
 
 export const User = () => {
-  const [orders, setOrders] = useState([]);
-  const [userData, setUserData] = useState(null);
-  const [localMeta, setLocalMeta] = useState({});
+  const { user } = useSelector((state) => state.auth);
   const token = useSelector(getToken);
+  const [localMeta, setLocalMeta] = useState({});
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const { items: allProducts } = useSelector((state) => state.products);
+
+  const orders = user?.ordersHistory ? [...user.ordersHistory].reverse() : [];
 
   const handleLogout = () => {
     dispatch(logout())
@@ -46,18 +52,16 @@ export const User = () => {
       .then(() => {
         navigate('/login', { replace: true });
       })
-      .catch((err) => {
-        console.error(err);
-      });
+      .catch((err) => console.error(err));
   };
 
   useEffect(() => {
     window.scrollTo(0, 0);
-
     if (!token) {
       navigate('/login');
       return;
     }
+    dispatch(fetchCurrentUser());
 
     try {
       const stored = JSON.parse(localStorage.getItem('orders_meta') || '{}');
@@ -65,210 +69,208 @@ export const User = () => {
     } catch (e) {
       console.error(e);
     }
-
-    const fetchHistory = async () => {
-      try {
-        const response = await getUserData();
-        setUserData(response.data);
-        const history = response.data.ordersHistory || [];
-        setOrders(history.reverse());
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchHistory();
-  }, [token, navigate]);
+  }, [token, navigate, dispatch]);
 
   const findSavedMeta = (orderDateString) => {
-    if (localMeta[orderDateString]) {
-      return localMeta[orderDateString];
-    }
+    if (localMeta[orderDateString]) return localMeta[orderDateString];
     const orderTime = new Date(orderDateString).getTime();
     const foundKey = Object.keys(localMeta).find((key) => {
       const localTime = new Date(key).getTime();
-      // Допуск 5 секунд на різницю в часі
       return Math.abs(orderTime - localTime) < 5000;
     });
     return foundKey ? localMeta[foundKey] : {};
   };
 
   return (
-    <>
-      <Container>
-        <InformationTitle>Account Information</InformationTitle>
+    <Container>
+      <InformationTitle>Account Information</InformationTitle>
 
-        <EditInfo>
-          <Photo>
-            <CameraIcon />
-          </Photo>
-          <Buttons>
-            <DeleteButton onClick={handleLogout}>Log out</DeleteButton>
-          </Buttons>
-        </EditInfo>
+      <EditInfo>
+        <Photo>
+          <CameraIcon />
+        </Photo>
+        <Buttons>
+          <DeleteButton onClick={handleLogout}>Log out</DeleteButton>
+        </Buttons>
+      </EditInfo>
 
-        <SignUpInfo>
-          <LeftInfo>
-            <Label>
-              First Name
-              <Input placeholder={userData?.username || 'User'} />
-            </Label>
-            <Label>
-              Email
-              <Input placeholder={userData?.email || 'email@example.com'} />
-            </Label>
-          </LeftInfo>
-          <RightInfo>
-            <Label>
-              Last Name
-              <Input placeholder={'Smith'} />
-            </Label>
-            <Label>
-              Phone Number
-              <Input placeholder={'+38 (050) ...'} />
-            </Label>
-          </RightInfo>
-        </SignUpInfo>
+      <SignUpInfo>
+        <LeftInfo>
+          <Label>
+            First Name
+            <Input placeholder={user?.username || 'User'} readOnly />
+          </Label>
+          <Label>
+            Email
+            <Input placeholder={user?.email || 'email@example.com'} readOnly />
+          </Label>
+        </LeftInfo>
+        <RightInfo>
+          <Label>
+            Last Name
+            <Input placeholder={'Smith'} readOnly />
+          </Label>
+          <Label>
+            Phone Number
+            <Input placeholder={'+38 (050) ...'} readOnly />
+          </Label>
+        </RightInfo>
+      </SignUpInfo>
 
-        <InformationTitle>Order History</InformationTitle>
+      <InformationTitle>Order History</InformationTitle>
 
-        {orders.length === 0 ? (
-          <p style={{ textAlign: 'center', padding: '20px', color: '#888' }}>No orders yet</p>
-        ) : (
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '30px', width: '100%' }}>
-            {orders.map((order) => {
-              const meta = findSavedMeta(order.addedAt);
-              const savedCustomer = meta.customer || {};
-              const savedQuantities = meta.quantities || {};
-              const savedOptions = meta.options || {};
+      {orders.length === 0 ? (
+        <p style={{ textAlign: 'center', padding: '20px', color: '#888' }}>No orders yet</p>
+      ) : (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '40px', width: '100%' }}>
+          {orders.map((order) => {
+            const meta = findSavedMeta(order.addedAt);
+            const savedCustomer = meta.customer || {};
+            const savedQuantities = meta.quantities || {};
+            const savedOptions = meta.options || {};
 
-              const displayName = savedCustomer.name || userData?.username || 'User';
-              const displayCard = savedCustomer.card
-                ? `**** ${savedCustomer.card.slice(-4)}`
-                : '****';
-              const displayCity = savedCustomer.city || '---';
-              const displayPhone = savedCustomer.phone || '---';
-              const displayAddress = savedCustomer.street
-                ? `${savedCustomer.street}, ${savedCustomer.houseNum}`
-                : 'Standard Delivery';
+            const displayName = savedCustomer.name || user?.username || 'User';
+            const displayCard = savedCustomer.card
+              ? `**** ${savedCustomer.card.slice(-4)}`
+              : '****';
+            const displayCity = savedCustomer.city || '---';
+            const displayPhone = savedCustomer.phone || '---';
+            const displayAddress = savedCustomer.street
+              ? `${savedCustomer.street}, ${savedCustomer.houseNum}`
+              : 'Standard Delivery';
 
-              let calculatedTotal = 0;
+            const orderItems = order.items || [];
 
-              const renderedItems = order.items.map((item) => {
-                const productId = item.product?._id || item.product || item._id || item;
+            const calculatedSum = orderItems.reduce((acc, item) => {
+              const productId = item.product?._id || item.product || item._id || item;
 
-                const productDetails =
-                  allProducts.find((p) => p._id === productId) ||
-                  (typeof item === 'object' ? item : {}) ||
-                  {};
+              const productDetails =
+                allProducts.find((p) => p._id === productId) ||
+                (typeof item === 'object' ? item : {}) ||
+                {};
 
-                const title = productDetails.title || item.product?.title || 'Unknown Product';
-                const image =
-                  productDetails.images?.[0] ||
-                  item.product?.images?.[0] ||
-                  'https://via.placeholder.com/80';
-                const price = productDetails.price || item.product?.price || 0;
+              const price = productDetails.price || item.product?.price || 0;
+              const qty = savedQuantities[productId] || item.qty || 1;
 
-                const qty = savedQuantities[productId] || item.qty || 1;
+              return acc + price * qty;
+            }, 0);
 
-                const options = savedOptions[productId] || {};
-                const optionsStr = Object.entries(options)
-                  .map(([k, v]) => `${k}: ${v}`)
-                  .join(', ');
+            const finalTotal =
+              order.totalAmount && order.totalAmount > 0
+                ? Number(order.totalAmount)
+                : calculatedSum;
 
-                calculatedTotal += price * qty;
+            return (
+              <OrderBlock key={order._id || Math.random()}>
+                <OrderTableArea>
+                  <TableWrapper>
+                    <StyledTable>
+                      <TableHead>
+                        <TableRow>
+                          <TableHeader style={{ width: '60%' }}>Product</TableHeader>
+                          <TableHeader style={{ width: '20%', textAlign: 'center' }}>
+                            Quantity
+                          </TableHeader>
+                          <TableHeader style={{ width: '20%', textAlign: 'right' }}>
+                            Price
+                          </TableHeader>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        {orderItems.map((item) => {
+                          const productId = item.product?._id || item.product || item._id || item;
+                          const productDetails =
+                            allProducts.find((p) => p._id === productId) ||
+                            (typeof item === 'object' ? item : {}) ||
+                            {};
 
-                return (
-                  <ProductRow key={productId + Math.random()}>
-                    <ProductInfoBox>
-                      <ProductImage src={image} alt={title} />
-                      <div
-                        style={{
-                          display: 'flex',
-                          flexDirection: 'column',
-                          justifyContent: 'center',
-                          alignItems: 'flex-start',
-                        }}
-                      >
-                        <h4 style={{ margin: '0 0 5px 0' }}>{title}</h4>
+                          const title =
+                            productDetails.title || item.product?.title || 'Unknown Product';
+                          const image =
+                            productDetails.images?.[0] ||
+                            item.product?.images?.[0] ||
+                            'https://via.placeholder.com/80';
+                          const price = productDetails.price || item.product?.price || 0;
 
-                        {optionsStr && (
-                          <span style={{ fontSize: '13px', color: '#777' }}>{optionsStr}</span>
-                        )}
+                          const qty = savedQuantities[productId] || item.qty || 1;
+                          const options = savedOptions[productId] || {};
+                          const optionsStr = Object.entries(options)
+                            .map(([k, v]) => `${k}: ${v}`)
+                            .join(', ');
+
+                          return (
+                            <TableRow key={productId + Math.random()}>
+                              <TableCell>
+                                <ProductInfoBox>
+                                  <ProductImage src={image} alt={title} />
+                                  <div className="info-text">
+                                    <h4>{title}</h4>
+                                    {optionsStr && <span>{optionsStr}</span>}
+                                  </div>
+                                </ProductInfoBox>
+                              </TableCell>
+                              <TableCell style={{ textAlign: 'center' }}>{qty}</TableCell>
+                              <TableCell style={{ textAlign: 'right', fontWeight: 'bold' }}>
+                                ${(price * qty).toFixed(2)}
+                              </TableCell>
+                            </TableRow>
+                          );
+                        })}
+                      </TableBody>
+                    </StyledTable>
+                  </TableWrapper>
+                </OrderTableArea>
+
+                <OrderSummaryArea>
+                  <SummaryCard>
+                    <SummaryHeader>
+                      Order
+                      <span className="date">
+                        ({new Date(order.addedAt || Date.now()).toLocaleDateString()})
+                      </span>
+                    </SummaryHeader>
+
+                    <SummaryRow>
+                      <div>
+                        <span>Full Name</span>
+                        <p>{displayName}</p>
                       </div>
-                    </ProductInfoBox>
-                    <div className="qty">{qty}</div>
-                    <div className="price">${(price * qty).toFixed(2)}</div>
-                  </ProductRow>
-                );
-              });
+                      <div>
+                        <span>Payment Card</span>
+                        <p>{displayCard}</p>
+                      </div>
+                    </SummaryRow>
 
-              const finalTotal =
-                order.totalAmount && order.totalAmount > 0
-                  ? Number(order.totalAmount)
-                  : calculatedTotal;
+                    <SummaryRow>
+                      <div>
+                        <span>City</span>
+                        <p>{displayCity}</p>
+                      </div>
+                      <div>
+                        <span>Phone</span>
+                        <p>{displayPhone}</p>
+                      </div>
+                    </SummaryRow>
 
-              return (
-                <OrderContainer key={order._id || order.id}>
-                  <OrderLeft>
-                    <OrderHeader>
-                      <span style={{ gridColumn: '1 / 2' }}>Product</span>
-                      <span>Quantity</span>
-                      <span>Total Price</span>
-                    </OrderHeader>
-                    {renderedItems}
-                  </OrderLeft>
+                    <SummaryRow>
+                      <div style={{ width: '100%' }}>
+                        <span>Shipping Address</span>
+                        <p>{displayAddress}</p>
+                      </div>
+                    </SummaryRow>
 
-                  <OrderRight>
-                    <SummaryCard>
-                      <SummaryHeader>
-                        Order
-                        <span style={{ fontSize: '14px', marginLeft: '10px', fontWeight: '400' }}>
-                          ({new Date(order.addedAt || Date.now()).toLocaleDateString()})
-                        </span>
-                      </SummaryHeader>
+                    <TotalRow>
+                      <span>Total</span>
 
-                      <SummaryRow>
-                        <div>
-                          <span>Full Name</span>
-                          <p>{displayName}</p>
-                        </div>
-                        <div>
-                          <span>Payment Card</span>
-                          <p>{displayCard}</p>
-                        </div>
-                      </SummaryRow>
-
-                      <SummaryRow>
-                        <div>
-                          <span>City</span>
-                          <p>{displayCity}</p>
-                        </div>
-                        <div>
-                          <span>Phone</span>
-                          <p>{displayPhone}</p>
-                        </div>
-                      </SummaryRow>
-
-                      <SummaryRow>
-                        <div style={{ width: '100%' }}>
-                          <span>Shipping Address</span>
-                          <p>{displayAddress}</p>
-                        </div>
-                      </SummaryRow>
-
-                      <TotalRow>
-                        <span>Total</span>
-                        <span>${finalTotal.toFixed(2)}</span>
-                      </TotalRow>
-                    </SummaryCard>
-                  </OrderRight>
-                </OrderContainer>
-              );
-            })}
-          </div>
-        )}
-      </Container>
-    </>
+                      <span>${finalTotal.toFixed(2)}</span>
+                    </TotalRow>
+                  </SummaryCard>
+                </OrderSummaryArea>
+              </OrderBlock>
+            );
+          })}
+        </div>
+      )}
+    </Container>
   );
 };

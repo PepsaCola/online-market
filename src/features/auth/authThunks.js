@@ -47,8 +47,9 @@ export const fetchCurrentUser = createAsyncThunk('auth/refresh', async (_, { rej
   }
   try {
     setAuthHeader(token);
-    const response = await axiosInstance.get('/api');
-    return { user: response.data, accessToken: token };
+
+    const response = await axiosInstance.get('/');
+    return { user: response.data.user, accessToken: token };
   } catch (error) {
     localStorage.removeItem('accessToken');
     clearAuthHeader();
